@@ -1,9 +1,8 @@
 import React from 'react';
-import IconButton from "material-ui/es/IconButton/IconButton";
-import SearchIcon from 'material-ui-icons/Search';
 import Grid from "material-ui/es/Grid/Grid";
 import Typography from "material-ui/es/Typography/Typography";
 import withStyles from "material-ui/es/styles/withStyles";
+import PropType from 'prop-types';
 
 
 const styles = theme => ({
@@ -16,6 +15,14 @@ const styles = theme => ({
 
 
 class BodyContent extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        searchValue : '',
+    };
+    }
+
 
 
     render() {
@@ -28,7 +35,7 @@ class BodyContent extends React.Component {
         <Grid container>
             {/* title row*/}
 
-            <Grid item xs={12} type={'title'}>검색 결과 x 건</Grid>
+            <Grid item xs={12} type={'title'}>입력어 : {this.props.searchValue}</Grid>
 
             {/*2 row*/}
             <Grid item xs={12}>
@@ -49,6 +56,12 @@ class BodyContent extends React.Component {
 }
 }
 
-BodyContent.propTypes = {};
+BodyContent.propTypes = {
+    searchValue: PropType.string.isRequired
+};
+
+BodyContent.defaultProps = {
+    searchValue: '',
+};
 
 export default withStyles(styles)(BodyContent );

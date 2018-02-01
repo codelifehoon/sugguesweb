@@ -1,36 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HomeView from "./HomeView";
 import './App.css';
-import HomeView from './product/HomeView'
-import Typography from 'material-ui/Typography';
 
 
-
-
-
-
-
-
-
-class App extends Component {
+ class App extends Component {
   render() {
-
-      let  componentVal = new Object();;
+      let  componentVal = new Object();
       componentVal.root = 'rootName';
-      componentVal.paper = 'rootDemoName';
-      componentVal.control = 'rootcontrolName';
+      return (
+          <div className={'App'}>
+              <Router>
+                  <Switch>
+                      <Route exact path="/" component={HomeView}/>
+                      <Route path="/member"
+                             render={ ()  => <HomeView  templateSelectorKey={'memberLogin'} /> }
+                        />
+                      <Route path="/"
+                             render={ ()  => <HomeView  templateSelectorKey={'registryLifePlan'} /> }
+                      />
 
-
-
-    return (
-        <div className="App">
-            <HomeView contentSelecterKey={'main'}/>
-            <Typography>Chaos happens when you follow emptiness so purely that whatsoever you are existing is your issue.</Typography>
+                  <Route component={HomeView}/>
+              </Switch>
+          </Router>
         </div>
     );
-
-
   }
 }
 
-export default App;
+export default  App;
+
+

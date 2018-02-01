@@ -5,6 +5,7 @@ import SearchInputBox from "./SearchInputBox";
 import withStyles from "material-ui/es/styles/withStyles";
 import Grid from "material-ui/es/Grid/Grid";
 import Typography from "material-ui/es/Typography/Typography";
+import PropTypes from 'prop-types';
 
 const styles = theme =>({
 /*
@@ -34,9 +35,23 @@ const styles = theme =>({
 
 class SearchBar extends React.Component{
 
-    handleClick = () =>
+
+    state ={
+        searchValue : '',
+    };
+
+
+    searchTextChange = (  newValue  ) => {
+        this.setState({ searchValue : newValue});
+        console.log(newValue);
+        this.props.notiSearchTextChange(newValue);
+    };
+
+
+    doSearchButton = () =>
     {
-        console.log('###handleClick###');
+        this.props.notiSearchTextChange(this.state.searchValue);
+        console.log('###doSearch###');
     }
 
     render(){
@@ -49,20 +64,30 @@ class SearchBar extends React.Component{
                     <Grid container classes={classes.row}>
                         <Grid item xs={1} classes={classes.col}></Grid>
                         <Grid item xs={9} classes={classes.col}  >
-                            <SearchInputBox/>
+                            <SearchInputBox onChange={this.searchTextChange} />
+
                             </Grid>
                         <Grid item xs={2}  classes={classes.col}>
                             <Typography noWrap align={'left'}>
-                                <IconButton onClick={this.handleClick}><SearchIcon/></IconButton>
+                                <IconButton onClick={this.doSearchButton}><SearchIcon/></IconButton>
                             </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
-
-
             </div>
         );
     }
 }
+
+
+SearchBar.propTypes = {
+    notiSearchTextChange : PropTypes.func.isRequired,
+}
+
+SearchBar.defaultProps = {
+    notiSearchTextChange : ()=> {},
+}
+
+
 
 export  default withStyles(styles)(SearchBar);

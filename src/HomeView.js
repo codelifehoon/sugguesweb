@@ -12,8 +12,8 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
-import { mailFolderListItems, otherMailFolderListItems } from './tileData';
-import ContentSelector from "./ContentSelector";
+import { mailFolderListItems, otherMailFolderListItems } from './product/tileData';
+import TemplateSelector from "./product/TemplateSelector";
 
 
 
@@ -113,7 +113,12 @@ class HomeView extends React.Component {
     state = {
         open: false,
         anchor: 'left',
+        barTitle:'',
     };
+
+    constructor(props) {
+        super(props)
+    }
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -131,11 +136,24 @@ class HomeView extends React.Component {
 
     render() {
 
-        const { classes, theme , contentSelecterKey} = this.props;
-        const { anchor, open } = this.state;
+        const { classes, theme , templateSelectorKey, match} = this.props;
+        const { anchor, open} = this.state;
+        let {barTitle} = this.state;
+
+
+        if (templateSelectorKey === 'main') barTitle = '환영 합니다!';
+        else if (templateSelectorKey === 'member') barTitle = '로그인';
+
+
+
+
+
+        //if ( match.params.contentSelecterKey != '') contentSelecterKey = match.params.contentSelecterKey
+
+
 
         console.log('####################');
-        console.log(contentSelecterKey);
+        console.log(templateSelectorKey);
         const drawer = (
             <Drawer
                 type="persistent"
@@ -187,7 +205,7 @@ class HomeView extends React.Component {
                                 <MenuIcon />
                             </IconButton>
                             <Typography type="title" color="inherit" noWrap>
-                                제목을 입력하시오
+                                {barTitle}
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -198,7 +216,7 @@ class HomeView extends React.Component {
                             [classes[`contentShift-${anchor}`]]: open,
                         })}
                     >
-                        <ContentSelector contentSelecterKey={contentSelecterKey}/>
+                        <TemplateSelector templateSelectorKey={templateSelectorKey}/>
                     </main>
 
                     {after}
@@ -211,7 +229,12 @@ class HomeView extends React.Component {
 HomeView.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    contentSelecterKey: PropTypes.string,
+    templateSelectorKey: PropTypes.string.isRequired,
+};
+
+
+HomeView.defaultProps = {
+    templateSelectorKey: 'main',
 
 };
 

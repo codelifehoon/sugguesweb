@@ -165,17 +165,17 @@ class IntegrationAutosuggest extends React.Component {
         });
     };
 
-    handleChange = (event, { newValue }) => {
-        // console.log(newValue)
+    searchTextChange = (event, { newValue }) => {
+
         this.setState({
             value: newValue,
         });
+
+        this.props.onChange(newValue);
+
     };
 
-    doSearch = (searchValue) =>{
-        console.log('####검색시작####');
-        console.log(searchValue);
-    }
+
 
     render() {
         const { classes } = this.props;
@@ -201,8 +201,7 @@ class IntegrationAutosuggest extends React.Component {
                         classes,
                         placeholder: '검색어를 입력 해주세요.',
                         value: this.state.value,
-                        onChange: this.handleChange,
-
+                        onChange: this.searchTextChange,
                     }}
                 />
             </div>
@@ -212,6 +211,8 @@ class IntegrationAutosuggest extends React.Component {
 
 IntegrationAutosuggest.propTypes = {
     classes: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
+
 };
 
 export default withStyles(styles)(IntegrationAutosuggest);
