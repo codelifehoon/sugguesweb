@@ -27,15 +27,15 @@
       <mask>*.aj</mask>
       <mask>*.a</mask>
       <mask>*.j</mask>
+      <mask>*.틔\</mask>
+      <mask>*.틔</mask>
+      <mask>*.xl</mask>
+      <mask>*.x</mask>
       <mask>*.ja</mask>
       <mask>*.jav</mask>
       <mask>*.java</mask>
       <mask>*</mask>
-      <mask>*.틔\</mask>
-      <mask>*.틔</mask>
       <mask>*.</mask>
-      <mask>*.xl</mask>
-      <mask>*.x</mask>
       <mask>*.xml</mask>
     </recentFileMasks>
   </component>
