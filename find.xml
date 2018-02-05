@@ -5,12 +5,8 @@
     <option name="regularExpressions" value="true" />
     <option name="REGULAR_EXPRESSIONS" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
-    <option name="FILE_MASK" value="*" />
+    <option name="FILE_MASK" value="*.java" />
     <recentFileMasks>
-      <mask>&amp;</mask>
-      <mask>*.jsp,*.js</mask>
-      <mask>*.틔</mask>
-      <mask>*.트</mask>
       <mask>*.ㅌ</mask>
       <mask>*.ml</mask>
       <mask>*.m</mask>
@@ -20,23 +16,27 @@
       <mask>*.js</mask>
       <mask>*.jsp</mask>
       <mask>*/</mask>
-      <mask>*.ㅓㅁㅍㅁ</mask>
-      <mask>*.ㅓㅁㅍ</mask>
-      <mask>*.ㅓㅁ</mask>
-      <mask>*.ㅓ</mask>
       <mask>*.jva</mask>
       <mask>*.jv</mask>
+      <mask>*.x</mask>
+      <mask>*.xml</mask>
+      <mask>*.y</mask>
+      <mask>*.ym</mask>
+      <mask>*.yml</mask>
+      <mask>*.ㅓㅁㅍ</mask>
+      <mask>*.ㅓㅁㅍㅁ</mask>
+      <mask>*.ㅓㅁ</mask>
+      <mask>*.ㅓ</mask>
+      <mask>*.ajva</mask>
+      <mask>*.ajv</mask>
+      <mask>*.aj</mask>
+      <mask>*.a</mask>
+      <mask>*</mask>
+      <mask>*.</mask>
       <mask>*.j</mask>
       <mask>*.ja</mask>
       <mask>*.jav</mask>
       <mask>*.java</mask>
-      <mask>*.x</mask>
-      <mask>*.xml</mask>
-      <mask>*.</mask>
-      <mask>*.y</mask>
-      <mask>*.ym</mask>
-      <mask>*.yml</mask>
-      <mask>*</mask>
     </recentFileMasks>
   </component>
 </application>
