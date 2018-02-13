@@ -2,8 +2,8 @@ import React from 'react';
 import Grid from "material-ui/Grid/Grid";
 import Typography from "material-ui/Typography/Typography";
 import withStyles from "material-ui/styles/withStyles";
-import {Chip,TextField} from "material-ui";
-
+import {Button, Chip, Icon, TextField} from "material-ui";
+import dateformat from 'dateformat';
 
 
 
@@ -22,21 +22,51 @@ const styles = theme => ({
     menu: {
         width: 200,
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+    },
+
 });
 
 
-class RegistryLifePlan extends React.Component {
+
+class RegistryPlan extends React.Component {
 
     state = {
-
-        searchTagValue: '',
+        planName:'',
+        planLocation:'',
+        planStartDt:dateformat(new Date(),'yyyy-mm-dd')+'T10:00',
+        planEndDt:dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
         chipData: [
             { key: 'Angular'},
             { key: 'jQuery'},
         ],
+    };
+
+    handleDefaultChange  = (event) =>{
+
+        console.log(event.target);
+        if (event.target.id === 'planName'){
+            this.setState({planName: event.target.value});
+        } else if (event.target.id === 'planLocation'){
+            this.setState({planLocation: event.target.value});
+        }
+        else if (event.target.id === 'datetimeLocalS'){
+            this.setState({planStartDt: event.target.value});
+        }
+        else if (event.target.id === 'datetimeLocalE'){
+            this.setState({planEndDt: event.target.value});
+        }
+
 
 
     };
+
+
+
 
 // 암묵적 function 이어서 life 현 this을 scop으로 자동 적용 된듯
 // 명시적으로 funciton 생성하면 bind 해야 할것 같은데.
@@ -66,10 +96,7 @@ class RegistryLifePlan extends React.Component {
 
             addChipData['key'] = tagValue;
 
-
             chipData.splice(arrayLength,0,addChipData);
-            console.log('##############');
-            console.log(chipData);
 
             this.setState({searchTagValue : ''});
             this.setState({chipData});
@@ -81,9 +108,14 @@ class RegistryLifePlan extends React.Component {
 
     handleSubmit = (event) => {
 
+
+        if (event.target.id === 'formSubmitBtn')
+        {
         console.log('###########handleSubmit');
-        console.log(event);
-//        event.preventDefault();
+        console.log(this.state);
+        }
+
+        event.preventDefault();
     }
 
 
@@ -94,41 +126,35 @@ class RegistryLifePlan extends React.Component {
     const  {classes} = this.props;
         return (
             <div>
-                <form id={'form'} action={'/submit'} onSubmit={this.handleSubmit}>
+                <form id={'form'}   onSubmit={this.handleSubmit}>
 
                 <Grid container>
 
-
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
-                            id="helperText"
+                            id="planName"
                             label="(필수)즐거운 계획을 입력 해주세요."
                             className={classes.textField}
                             helperText="계획의 명칭을 입력 해주세"
                             margin="normal"
+                            value={this.state.planName}
+                            onChange={this.handleDefaultChange}
+
                         />
                     </Grid>
+
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
-                            id="helperText"
-                            label="(필수)즐거운 계획을 입력 해주세요."
-                            className={classes.textField}
-                            helperText="계획의 명칭을 입력 해주세"
-                            margin="normal"
-                        />
-                    </Grid>
-
-                    <Grid item xs={1}/>
-                    <Grid item xs={11}>
-                        <TextField
-                            id="helperText"
+                            id="planLocation"
                             label="위치를 입력 해주세요."
                             className={classes.textField}
                             helperText="어디서 진행 하나요?"
                             margin="normal"
+                            value={this.state.planLocation}
+                            onChange={this.handleDefaultChange}
                         />
                     </Grid>
 
@@ -138,11 +164,13 @@ class RegistryLifePlan extends React.Component {
                             id="datetimeLocalS"
                             label="시작일"
                             type="datetime-local"
-                            defaultValue="2017-05-24T10:30"
+                            defaultValue={this.state.planStartDt}
+                            value={this.state.planStartDt}
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            onChange={this.handleDefaultChange}
                         />
                     </Grid>
 
@@ -152,11 +180,13 @@ class RegistryLifePlan extends React.Component {
                             id="datetimeLocalE"
                             label="종료일"
                             type="datetime-local"
-                            defaultValue="2017-05-24T10:30"
+                            defaultValue={this.state.planEndDt}
+                            value={this.state.planEndDt}
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            onChange={this.handleDefaultChange}
                         />
                     </Grid>
 
@@ -164,7 +194,7 @@ class RegistryLifePlan extends React.Component {
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
-                            id="with-placeholder"
+                            id="with-searchTagInput"
                             label="검색에 사용할 단어를 입력 해주세요"
                             placeholder="필요시 더 입력 해주세요"
                             className={classes.textField}
@@ -175,9 +205,9 @@ class RegistryLifePlan extends React.Component {
                         />
                     </Grid>
 
-                    <Grid container  style={{border:'1px solid silver'}}>
-                        <Grid item xs={1} style={{border:'1px solid silver'}}/>
-                        <Grid item  xs={11} style={{border:'1px solid silver'}}>
+                    <Grid container>
+                        <Grid item xs={1} />
+                        <Grid item  xs={11} >
                             {this.state.chipData.map(data => {
                                 return (
                                     <Chip id={'searchTagArray'}
@@ -190,11 +220,19 @@ class RegistryLifePlan extends React.Component {
                             })}
                         </Grid>
                     </Grid>
+
+
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Button id="formSubmitBtn" className={classes.button} raised color="primary" type={'submit'}>
+                                등록하기
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+
                 </Grid>
                 </form>
-
-
-
 
             </div>
         );
@@ -204,5 +242,5 @@ class RegistryLifePlan extends React.Component {
 }
 }
 
-RegistryLifePlan.propTypes = {};
-export default withStyles(styles)(RegistryLifePlan );
+RegistryPlan.propTypes = {};
+export default withStyles(styles)(RegistryPlan );

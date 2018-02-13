@@ -1,9 +1,9 @@
 import React from 'react';
 import SearchBar from './main/SearchBar';
-import {SearchBarContainer,BodyContentContainer} from '../reduce/Containers';
+import {SearchBarContainer,BodyContentContainer} from '../reduce/ContainerMain';
 import PropTypes from 'prop-types';
 import MemberLogin from "./member/MemberLogin";
-import RegistryLifePlan from "./content/RegistryLifePlan";
+import RegistryPlan from "./content/RegistryPlan";
 
 
 class TemplateSelector extends React.Component {
@@ -22,7 +22,7 @@ class TemplateSelector extends React.Component {
             </div>
         );
       else if (templateSelectorKey === 'memberLogin') return (<MemberLogin/>);
-      else if (templateSelectorKey === 'registryLifePlan') return (<RegistryLifePlan/>);
+      else if (templateSelectorKey === 'registryPlan') return (<RegistryPlan/>);
 
 
       else return '';
@@ -37,4 +37,7 @@ TemplateSelector.propTypes = {
     templateSelecterKey: PropTypes.string.isRequired,
 };
 
+TemplateSelector.defaultProps = {
+    templateSelecterKey: 'main',
+};
 export default (TemplateSelector);

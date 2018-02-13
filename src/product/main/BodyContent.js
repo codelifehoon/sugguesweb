@@ -3,6 +3,9 @@ import Grid from "material-ui/es/Grid/Grid";
 import Typography from "material-ui/es/Typography/Typography";
 import withStyles from "material-ui/es/styles/withStyles";
 import PropType from 'prop-types';
+import  BodyContentPanelList from './BodyContentPanelList';
+import * as dateformat from "dateformat";
+import DateClickSelecter from "../CommonComponet/DateClickSelecter";
 
 
 const styles = theme => ({
@@ -19,7 +22,7 @@ class BodyContent extends React.Component {
         super(props);
 
         this.state = {
-        searchValue : '',
+        searchDate : dateformat(new Date(),'yyyy-mm-dd'),
     };
     }
 
@@ -35,16 +38,11 @@ class BodyContent extends React.Component {
         <Grid container>
             {/* title row*/}
 
-            <Grid item xs={12} type={'title'}>입력어 : {this.props.searchValue}</Grid>
+            <Grid item xs={12} > <DateClickSelecter dateString={this.state.searchDate}/></Grid>
 
             {/*2 row*/}
             <Grid item xs={12}>
-                <Typography type={'caption'} align={'left'} >
-
-                    A boundless form of mind is the awareness.<br/>
-                    All wonderful moons absorb each other, only magical seekers have a samadhi.
-
-                </Typography>
+                <BodyContentPanelList></BodyContentPanelList>
             </Grid>
 
         </Grid>

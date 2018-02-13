@@ -37,7 +37,7 @@ class MemberLogin extends React.Component {
                     {/* title row*/}
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Typography type={'display1'} color={'error'} align={'left'}>Welcome!</Typography>
+                        <Typography type={'display1'} color={'primary'} align={'left'}>Welcome!</Typography>
                         <Typography gutterBottom align={'left'}>
                             {`
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit,

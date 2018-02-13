@@ -10,8 +10,10 @@ const searchInitialState = {
 
 
 // action 발생시 처리 logic 및 action 부가정보를 받아서 state 값을 변경하든. 뭔가를 하는 module
+// every reducer function  recive notification
 export  const  searchBoxChange = (state=searchInitialState , action) => {
 
+    console.log('##### doSearchBoxChange');
     switch (action.type){
         case types.DO_SEARCH :
             return Object.assign({},state,{searchValue:action.searchText});
@@ -20,8 +22,10 @@ export  const  searchBoxChange = (state=searchInitialState , action) => {
     }
 }
 
+
 const reducerFunctions = combineReducers({
-    searchBoxChange
+    searchBoxChange,
+
 });
 
 export default reducerFunctions;

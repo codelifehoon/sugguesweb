@@ -4,13 +4,13 @@ import * as actions from './ReducerActions';
 import  SearchBar from '../product/main/SearchBar';
 import  BodyContent from '../product/main/BodyContent'
 
-let mapStatusToSearchBarProps = (state) =>{
+let mapStatusSearchBar = (state) =>{
     return {
                 searchValue : state.searchBoxChange.searchValue,
             };
     };
 
-let mapDispatchToSearchBarProps = (dispatch) =>{
+let mapDispatchSearchBar = (dispatch) =>{
     return {
         notiSearchTextChange : (searchText) => dispatch(actions.dispatchSearchBarText(searchText)),
     };
@@ -24,7 +24,7 @@ let mapStatusToMainBodyContentProps = (state) =>{
 };
 
 
-export  const SearchBarContainer = connect(mapStatusToSearchBarProps,mapDispatchToSearchBarProps)(SearchBar);
+export  const SearchBarContainer = connect(mapStatusSearchBar,mapDispatchSearchBar)(SearchBar);
 export  const BodyContentContainer = connect(mapStatusToMainBodyContentProps)(BodyContent);
 
 

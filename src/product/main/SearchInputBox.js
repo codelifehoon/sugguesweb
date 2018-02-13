@@ -166,7 +166,7 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     searchTextChange = (event, { newValue }) => {
-
+         console.log(newValue);
         this.setState({
             value: newValue,
         });

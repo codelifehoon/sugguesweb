@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomeView from "./HomeView";
 import './App.css';
+import IconBtn from "./component_test/IconBtn";
 
 
  class App extends Component {
@@ -16,8 +17,11 @@ import './App.css';
                       <Route path="/member"
                              render={ ()  => <HomeView  templateSelectorKey={'memberLogin'} /> }
                         />
-                      <Route path="/"
-                             render={ ()  => <HomeView  templateSelectorKey={'registryLifePlan'} /> }
+                      <Route path="/registryPlan"
+                             render={ ()  => <HomeView  templateSelectorKey={'registryPlan'} /> }
+                      />
+                      <Route path="/IconBtn"
+                             render={ ()  => <IconBtn/> }
                       />
 
                   <Route component={HomeView}/>

@@ -128,11 +128,6 @@ class HomeView extends React.Component {
         this.setState({ open: false });
     };
 
-    // handleChangeAnchor = event => {
-    //     this.setState({
-    //         anchor: event.target.value,
-    //     });
-    // };
 
     render() {
 
@@ -142,7 +137,7 @@ class HomeView extends React.Component {
 
 
         if (templateSelectorKey === 'main') barTitle = '환영 합니다!';
-        else if (templateSelectorKey === 'member') barTitle = '로그인';
+        else if (templateSelectorKey === 'memberLogin') barTitle = '로그인';
 
 
 
