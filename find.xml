@@ -2,39 +2,41 @@
   <component name="FindSettings">
     <option name="customScope" value="All Places" />
     <option name="defaultScopeName" value="All Places" />
+    <option name="localRegularExpressions" value="true" />
     <option name="regularExpressions" value="true" />
     <option name="REGULAR_EXPRESSIONS" value="true" />
+    <option name="LOCAL_REGULAR_EXPRESSIONS" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
     <option name="FILE_MASK" value="*" />
     <recentFileMasks>
-      <mask>*.as</mask>
-      <mask>*.css</mask>
-      <mask>*.mxml</mask>
-      <mask>&amp;</mask>
-      <mask>*.jsp,*.js</mask>
-      <mask>*.틔</mask>
-      <mask>*.트</mask>
-      <mask>*.ㅌ</mask>
-      <mask>*.ml</mask>
-      <mask>*.m</mask>
-      <mask>*.ㅗ</mask>
       <mask>*.ㅓ네</mask>
       <mask>*.ㅓㄴ</mask>
       <mask>*.js</mask>
       <mask>*.jsp</mask>
       <mask>*/</mask>
-      <mask>*.ㅓㅁㅍㅁ</mask>
-      <mask>*.ㅓㅁㅍ</mask>
-      <mask>*.ㅓㅁ</mask>
-      <mask>*.ㅓ</mask>
       <mask>*.jva</mask>
       <mask>*.jv</mask>
+      <mask>*.y</mask>
+      <mask>*.ym</mask>
+      <mask>*.yml</mask>
+      <mask>*.ㅓㅁㅍ</mask>
+      <mask>*.ㅓㅁㅍㅁ</mask>
+      <mask>*.ㅓㅁ</mask>
+      <mask>*.ㅓ</mask>
+      <mask>*.ajva</mask>
+      <mask>*.ajv</mask>
+      <mask>*.aj</mask>
+      <mask>*.a</mask>
+      <mask>*.틔\</mask>
+      <mask>*.틔</mask>
+      <mask>*.xl</mask>
+      <mask>*.x</mask>
+      <mask>*.java\</mask>
       <mask>*.j</mask>
       <mask>*.ja</mask>
       <mask>*.jav</mask>
-      <mask>*.java</mask>
       <mask>*.</mask>
-      <mask>*.x</mask>
+      <mask>*.java</mask>
       <mask>*.xml</mask>
       <mask>*</mask>
     </recentFileMasks>
