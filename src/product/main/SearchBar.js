@@ -1,10 +1,10 @@
 import React from 'react';
-import IconButton from "material-ui/es/IconButton/IconButton";
+import IconButton from "material-ui/IconButton/IconButton";
 import SearchIcon from 'material-ui-icons/Search';
 import SearchInputBox from "./SearchInputBox";
-import withStyles from "material-ui/es/styles/withStyles";
-import Grid from "material-ui/es/Grid/Grid";
-import Typography from "material-ui/es/Typography/Typography";
+import withStyles from "material-ui/styles/withStyles";
+import Grid from "material-ui/Grid/Grid";
+import Typography from "material-ui/Typography/Typography";
 import PropTypes from 'prop-types';
 
 const styles = theme =>({

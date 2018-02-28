@@ -1,8 +1,6 @@
 import React from 'react';
-import Grid from "material-ui/es/Grid/Grid";
-import FormLabel from "material-ui/es/Form/FormLabel";
-import RadioGroup from "../../node_modules/material-ui/Radio/RadioGroup";
-import FormControlLabel from "material-ui/es/Form/FormControlLabel";
+import Grid from "material-ui/Grid/Grid";
+
 
 
 
