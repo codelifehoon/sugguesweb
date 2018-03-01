@@ -104,7 +104,7 @@ class DateClickSelecter extends React.Component {
 }
 
 DateClickSelecter.propTypes = {
-    selectedDay : propTypes.string.isRequired
+    selectedDay : propTypes.object.isRequired
 };
 
 DateClickSelecter.defaultProps = {

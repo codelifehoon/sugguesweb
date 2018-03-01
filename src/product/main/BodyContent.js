@@ -1,7 +1,6 @@
 import React from 'react';
-import Grid from "material-ui/es/Grid/Grid";
-import Typography from "material-ui/es/Typography/Typography";
-import withStyles from "material-ui/es/styles/withStyles";
+import Grid from "material-ui/Grid/Grid";
+import withStyles from "material-ui/styles/withStyles";
 import PropType from 'prop-types';
 import  BodyContentPanelList from './BodyContentPanelList';
 import * as dateformat from "dateformat";
