@@ -1,15 +1,16 @@
 import React from 'react';
-import SearchBar from './main/SearchBar';
 import {SearchBarContainer,BodyContentContainer} from '../reduce/ContainerMain';
 import PropTypes from 'prop-types';
-import MemberLogin from "./member/MemberLogin";
-import RegistryPlan from "./content/RegistryPlan";
+import TemplateManager from "./CommonComponet/TemplateManager";
 
 
 class TemplateSelector extends React.Component {
 
 
+
+
     render() {
+
 
       const {templateSelectorKey} = this.props;
       console.log(templateSelectorKey);
@@ -21,12 +22,9 @@ class TemplateSelector extends React.Component {
                 <BodyContentContainer/>
             </div>
         );
-      else if (templateSelectorKey === 'memberLogin') return (<MemberLogin/>);
-      else if (templateSelectorKey === 'registryPlan') return (<RegistryPlan/>);
-
-
-      else return '';
-
+      else {
+          return TemplateManager.getComponentObj(templateSelectorKey);
+      }
 
     }
 }

@@ -14,7 +14,11 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import { mailFolderListItems, otherMailFolderListItems } from './product/tileData';
 import TemplateSelector from "./product/TemplateSelector";
-
+import {Button, Grid} from "material-ui";
+import LogInOutButton from "./product/CommonComponet/LogInOutButton";
+import TemplateManager from "./product/CommonComponet/TemplateManager";
+import DialogForNoti from "./product/CommonComponet/DialogForNoti";
+import queryString from "query-string";
 
 
 const drawerWidth = 240;
@@ -114,11 +118,19 @@ class HomeView extends React.Component {
         open: false,
         anchor: 'left',
         barTitle:'',
+        dialogForNoti : null
     };
 
-    constructor(props) {
-        super(props)
-    }
+
+    componentDidMount(){
+
+        console.log(this.props);
+        if (typeof(this.props.location) !== 'undefined' &&  queryString.parse(this.props.location.search).loginSuccess === 'fail')  {
+
+            this.setState({dialogForNoti :  this.createDialogForNoti('Login Error',queryString.parse(this.props.location.search).message)});
+        }
+
+    };
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -129,26 +141,16 @@ class HomeView extends React.Component {
     };
 
 
+    createDialogForNoti = (  dialogTitle,dialogMessage)=>{
+        return (<DialogForNoti  dialogTitle={dialogTitle} dialogMessage={dialogMessage} />);
+    }
+
     render() {
 
-        const { classes, theme , templateSelectorKey, match} = this.props;
+        const { classes, theme , templateSelectorKey} = this.props;
         const { anchor, open} = this.state;
-        let {barTitle} = this.state;
+        const barTitle = TemplateManager.getComponentTitle(templateSelectorKey);
 
-
-        if (templateSelectorKey === 'main') barTitle = '환영 합니다!';
-        else if (templateSelectorKey === 'memberLogin') barTitle = '로그인';
-
-
-
-
-
-        //if ( match.params.contentSelecterKey != '') contentSelecterKey = match.params.contentSelecterKey
-
-
-
-        console.log('####################');
-        console.log(templateSelectorKey);
         const drawer = (
             <Drawer
                 type="persistent"
@@ -190,19 +192,28 @@ class HomeView extends React.Component {
                             [classes[`appBarShift-${anchor}`]]: open,
                         })}
                     >
-                        <Toolbar disableGutters={!open}>
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={this.handleDrawerOpen}
-                                className={classNames(classes.menuButton, open && classes.hide)}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
-                                {barTitle}
-                            </Typography>
+                        <Grid container>
+                            <Grid item xs={8}>
+                        <Toolbar disableGutters={!open} >
+
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={this.handleDrawerOpen}
+                                    className={classNames(classes.menuButton, open && classes.hide)}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                                <Typography type="title" color="inherit" noWrap>
+                                    {barTitle}
+                                </Typography>
+
                         </Toolbar>
+                            </Grid>
+                            <Grid item xs={4} >
+                                <LogInOutButton align="center" ></LogInOutButton>
+                            </Grid>
+                        </Grid>
                     </AppBar>
                     {before}
                     <main
@@ -215,8 +226,17 @@ class HomeView extends React.Component {
                     </main>
 
                     {after}
+
                 </div>
+
+               {/*메세지*/}
+                {this.state.dialogForNoti}
+
+
+
+
             </div>
+
         );
     }
 }

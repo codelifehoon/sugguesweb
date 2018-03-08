@@ -1,4 +1,4 @@
-import React from 'react';
+
 import * as types from './ActionTypes';
 
 

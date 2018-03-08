@@ -1,8 +1,7 @@
 import React from 'react';
 import Grid from "material-ui/Grid/Grid";
-import Typography from "material-ui/Typography/Typography";
 import withStyles from "material-ui/styles/withStyles";
-import {Button, Chip, Icon, TextField} from "material-ui";
+import {Button, Chip, TextField} from "material-ui";
 import dateformat from 'dateformat';
 
 
@@ -48,7 +47,7 @@ class RegistryPlan extends React.Component {
 
     handleDefaultChange  = (event) =>{
 
-        console.log(event.target);
+
         if (event.target.id === 'planName'){
             this.setState({planName: event.target.value});
         } else if (event.target.id === 'planLocation'){
@@ -83,7 +82,7 @@ class RegistryPlan extends React.Component {
     };
 
     searchTagKeyDown = (event) => {
-        if(event.key == 'Enter'){
+        if(event.key === 'Enter'){
             let tagValue = event.target.value;
             let chipData = this.state.chipData;
             let  arrayLength = chipData.length;

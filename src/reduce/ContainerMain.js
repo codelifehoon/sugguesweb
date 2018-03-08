@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {connect} from 'react-redux';
 import * as actions from './ReducerActions';
 import  SearchBar from '../product/main/SearchBar';

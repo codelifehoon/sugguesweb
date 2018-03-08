@@ -3,26 +3,27 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomeView from "./HomeView";
 import './App.css';
 import IconBtn from "./component_test/IconBtn";
+import TemplateManager from "./product/CommonComponet/TemplateManager";
+
 
 
 class App extends Component {
     render() {
-        let  componentVal = new Object();
+        let componentVal = new Object();
+        let routeComponentList = TemplateManager.getTemplateList();
+
         componentVal.root = 'rootName';
+
         return (
+
             <div className={'App'}>
                 <Router>
                     <Switch>
                         <Route exact path="/" component={HomeView}/>
-                        <Route path="/member"
-                               render={ ()  => <HomeView  templateSelectorKey={'memberLogin'} /> }
-                        />
-                        <Route path="/registryPlan"
-                               render={ ()  => <HomeView  templateSelectorKey={'registryPlan'} /> }
-                        />
-                        <Route path="/IconBtn"
-                               render={ ()  => <IconBtn/> }
-                        />
+
+                        { routeComponentList.map(page => {
+                            return (<Route path={"/"+ page.componentName} key={page.key} render={ ()  => <HomeView  templateSelectorKey={page.componentName} /> }/>);
+                        }) }
 
                         <Route component={HomeView}/>
                     </Switch>

@@ -27,9 +27,27 @@ const styles = theme => ({
 
 class MemberLogin extends React.Component {
 
-    render() {
+    oAuthOnClick = (authType) => {
 
+        let oAuthUrl = '';
+        if (authType === 'google'){
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/google'
+        }else if (authType === 'facebook'){
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/facebook'
+        }
+        else {
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/naver'
+        }
+
+
+        console.log(oAuthUrl);
+        window.location.href = oAuthUrl;
+
+    }
+
+    render() {
     const  {classes} = this.props;
+
         return (
             <div>
 
@@ -45,29 +63,35 @@ class MemberLogin extends React.Component {
                     `}
                         </Typography>
                     </Grid>
-
-
+                    
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  raised className={classes.button}>
-                            Google
-                        </Button>
-                    </Grid>
-
-
-                    <Grid item xs={1}/>
-                    <Grid item xs={11}>
-                        <Button  raised className={classes.button}>
-                            Facebook
+                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('google')}}>
+                            google
                         </Button>
                     </Grid>
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  raised className={classes.button}>
-                            Naver
+                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('facebook')}}>
+                            facebook
                         </Button>
                     </Grid>
+
+                    <Grid item xs={1}/>
+                    <Grid item xs={11}>
+                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('naver')}}>
+                            naver
+                        </Button>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                    <Typography gutterBottom align={'center'} color={'secondary'} >
+                        로그인 정보는 1년동안 유지 됩니다.
+                    </Typography>
+
+                    </Grid>
+
                 </Grid>
 
             </div>
@@ -79,4 +103,5 @@ class MemberLogin extends React.Component {
 }
 
 MemberLogin.propTypes = {};
-export default withStyles(styles)(MemberLogin );
+
+export default withStyles(styles)(MemberLogin);

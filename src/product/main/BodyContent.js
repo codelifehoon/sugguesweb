@@ -61,4 +61,4 @@ BodyContent.defaultProps = {
     searchValue: '',
 };
 
-export default withStyles(styles)(BodyContent );
+export default withStyles(styles)(BodyContent);

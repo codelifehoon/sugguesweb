@@ -1,4 +1,3 @@
-import React from 'react';
 import {combineReducers} from 'redux';
 import * as types from './ActionTypes';
 
@@ -13,7 +12,6 @@ const searchInitialState = {
 // every reducer function  recive notification
 export  const  searchBoxChange = (state=searchInitialState , action) => {
 
-    console.log('##### doSearchBoxChange');
     switch (action.type){
         case types.DO_SEARCH :
             return Object.assign({},state,{searchValue:action.searchText});

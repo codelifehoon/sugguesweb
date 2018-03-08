@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import {KeyboardArrowLeft, KeyboardArrowRight} from 'material-ui-icons';
-import {Grid, Typography} from "material-ui";
+import {Grid, Typography,Button} from "material-ui";
 import propTypes from 'prop-types';
 import dateformat from 'dateformat';
 
@@ -75,7 +72,7 @@ class DateClickSelecter extends React.Component {
         return (
             <div>
             <Grid container className={classes.root}>
-                <Grid item xs={3} className={classes.borderCss}  alignItems={'flex-end'}>
+                <Grid item xs={3} className={classes.borderCss}  >
                         <Button fab mini color="secondary" aria-label="edit" className={classes.button}>
                             <KeyboardArrowLeft  onClick={this.keyboardArrowLeftClick}/>
                         </Button>
