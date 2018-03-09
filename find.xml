@@ -11,7 +11,6 @@
     <recentFileMasks>
       <mask>*.ㅓ네</mask>
       <mask>*.ㅓㄴ</mask>
-      <mask>*.jsp</mask>
       <mask>*/</mask>
       <mask>*.jva</mask>
       <mask>*.jv</mask>
@@ -38,6 +37,7 @@
       <mask>*.js</mask>
       <mask>*.xml</mask>
       <mask>*.java</mask>
+      <mask>*.jsp</mask>
       <mask>*</mask>
     </recentFileMasks>
   </component>
