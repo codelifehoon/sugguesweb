@@ -7,9 +7,9 @@ class TemplateSelector  {
 
     static getTemplateList = () => {
         let pageList = [
-            {componentName : 'main', componentObj: null , componentTitle:'환영 합니다~' , key:100},
+            {componentName : 'main', componentObj: null , componentTitle:'welcome' , key:100},
             {componentName : 'memberLogin', componentObj: <MemberLogin/> , componentTitle:'로그인',key:200},
-            {componentName : 'registryPlan', componentObj: <RegistryPlan/> , componentTitle:'행사등록',key:300},
+            {componentName : 'registryPlan', componentObj: <RegistryPlan/> , componentTitle:'등록',key:300},
 
         ];
 
