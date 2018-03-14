@@ -7,43 +7,10 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
+import queryString from "query-string";
+import axios from "axios/index";
 
-const suggestions = [
-    { label: 'Afghanistan' },
-    { label: 'Aland Islands' },
-    { label: 'Albania' },
-    { label: 'Algeria' },
-    { label: 'American Samoa' },
-    { label: 'Andorra' },
-    { label: 'Angola' },
-    { label: 'Anguilla' },
-    { label: 'Antarctica' },
-    { label: 'Antigua and Barbuda' },
-    { label: 'Argentina' },
-    { label: 'Armenia' },
-    { label: 'Aruba' },
-    { label: 'Australia' },
-    { label: 'Austria' },
-    { label: 'Azerbaijan' },
-    { label: 'Bahamas' },
-    { label: 'Bahrain' },
-    { label: 'Bangladesh' },
-    { label: 'Barbados' },
-    { label: 'Belarus' },
-    { label: 'Belgium' },
-    { label: 'Belize' },
-    { label: 'Benin' },
-    { label: 'Bermuda' },
-    { label: 'Bhutan' },
-    { label: 'Bolivia, Plurinational State of' },
-    { label: 'Bonaire, Sint Eustatius and Saba' },
-    { label: 'Bosnia and Herzegovina' },
-    { label: 'Botswana' },
-    { label: 'Bouvet Island' },
-    { label: 'Brazil' },
-    { label: 'British Indian Ocean Territory' },
-    { label: 'Brunei Darussalam' },
-];
+let suggestions  = null;
 
 function renderInput(inputProps) {
     const { classes, autoFocus, value, ref, ...other } = inputProps;
@@ -64,9 +31,11 @@ function renderInput(inputProps) {
     );
 }
 
+
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-    const matches = match(suggestion.label, query);
-    const parts = parse(suggestion.label, matches);
+    const matches = match(suggestion.autoCompliteText, query);
+    const parts = parse(suggestion.autoCompliteText, matches);
+
 
     return (
         <MenuItem selected={isHighlighted} component="div">
@@ -98,19 +67,19 @@ function renderSuggestionsContainer(options) {
 }
 
 function getSuggestionValue(suggestion) {
-    return suggestion.label;
+    return suggestion.autoCompliteText;
 }
 
-function getSuggestions(value) {
+function getSuggestions(value,autoCompliteList) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
 
+
     return inputLength === 0
         ? []
-        : suggestions.filter(suggestion => {
-            const keep =
-                count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
+        : autoCompliteList.filter(suggestion => {
+            const keep =  count < 5 && suggestion.autoCompliteText.toLowerCase().slice(0, inputLength) === inputValue;
 
             if (keep) {
                 count += 1;
@@ -153,9 +122,10 @@ class IntegrationAutosuggest extends React.Component {
     };
 
 
+
     handleSuggestionsFetchRequested = ({ value }) => {
         this.setState({
-            suggestions: getSuggestions(value),
+            suggestions: getSuggestions(value,this.props.autoCompliteList),
         });
     };
 
@@ -166,7 +136,7 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     searchTextChange = (event, { newValue }) => {
-         console.log(newValue);
+         // console.log(newValue);
         this.setState({
             value: newValue,
         });
@@ -211,8 +181,12 @@ class IntegrationAutosuggest extends React.Component {
 
 IntegrationAutosuggest.propTypes = {
     classes: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
-
+    onChange: PropTypes.func.isRequired,
+    autoCompliteList: PropTypes.array.isRequired
 };
+
+IntegrationAutosuggest.defaultProps = {
+    autoCompliteList : []
+}
 
 export default withStyles(styles)(IntegrationAutosuggest);

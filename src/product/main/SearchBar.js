@@ -6,30 +6,9 @@ import withStyles from "material-ui/styles/withStyles";
 import Grid from "material-ui/Grid/Grid";
 import Typography from "material-ui/Typography/Typography";
 import PropTypes from 'prop-types';
+import axios from "axios/index";
 
 const styles = theme =>({
-/*
-
-    root : {
-            flexGrow:1,
-
-
-    },
-    row : {
-            height:40,
-            whiteSpace:'noWrap',
-            padding:'0px',
-            border: '1px solid silver',
-
-    },
-    col : {
-        whiteSpace:'noWrap',
-        padding:'0px',
-        border: '1px solid silver',
-
-    }
-*/
-
 });
 
 
@@ -38,12 +17,26 @@ class SearchBar extends React.Component{
 
     state ={
         searchValue : '',
+        autoCompliteList :[]
     };
+
+    componentDidMount(){
+
+        let retUrl = 'http://localhost:3000/sv/content/findAutoCompliteList/type1'
+
+        //GET
+        axios.get(retUrl)
+            .then(res =>{ this.setState({autoCompliteList : res.data});})
+            .catch(err => { console.log('>>>> :' + err); });
+
+
+    };
+
 
 
     searchTextChange = (  newValue  ) => {
         this.setState({ searchValue : newValue});
-        console.log(newValue);
+        // console.log(newValue);
         this.props.notiSearchTextChange(newValue);
     };
 
@@ -64,7 +57,7 @@ class SearchBar extends React.Component{
                     <Grid container classes={classes.row}>
                         <Grid item xs={1} classes={classes.col}></Grid>
                         <Grid item xs={9} classes={classes.col}  >
-                            <SearchInputBox onChange={this.searchTextChange} />
+                            <SearchInputBox onChange={this.searchTextChange} autoCompliteList={this.state.autoCompliteList}/>
 
                             </Grid>
                         <Grid item xs={2}  classes={classes.col}>
