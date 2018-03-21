@@ -22,7 +22,8 @@ class SearchBar extends React.Component{
 
     componentDidMount(){
 
-        let retUrl = 'http://localhost:3000/sv/content/findAutoCompliteList/type1'
+
+        let retUrl = 'http://localhost:8080/Content/V1/findAutoCompliteList/type1'
 
         //GET
         axios.get(retUrl)

@@ -73,13 +73,13 @@ class DateClickSelecter extends React.Component {
             <div>
             <Grid container className={classes.root}>
                 <Grid item xs={3} className={classes.borderCss}  >
-                        <Button fab mini color="secondary" aria-label="edit" className={classes.button}>
+                        <Button variant='fab' mini color="secondary" aria-label="edit" className={classes.button}>
                             <KeyboardArrowLeft  onClick={this.keyboardArrowLeftClick}/>
                         </Button>
                 </Grid>
 
                 <Grid item xs={6} className={classes.borderCss} style={{paddingTop:'15px'}}>
-                    <Typography type={'headline'} className={classes.borderCss} >
+                    <Typography variant={'headline'} className={classes.borderCss} >
                         {dateformat(this.state.selectedDay,'yyyy-mm-dd')}
                     </Typography>
                     <Typography className={classes.borderCss} >
@@ -89,7 +89,7 @@ class DateClickSelecter extends React.Component {
 
 
                 <Grid item xs={3} className={classes.borderCss}>
-                    <Button fab mini color="secondary" aria-label="edit" className={classes.button}>
+                    <Button variant='fab' mini color="secondary" aria-label="edit" className={classes.button}>
                         <KeyboardArrowRight onClick={this.keyboardArrowRightClick}/>
                     </Button>
                 </Grid>
@@ -101,7 +101,8 @@ class DateClickSelecter extends React.Component {
 }
 
 DateClickSelecter.propTypes = {
-    selectedDay : propTypes.object.isRequired
+    selectedDay : propTypes.object.isRequired,
+    classes : propTypes.object.isRequired
 };
 
 DateClickSelecter.defaultProps = {

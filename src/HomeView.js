@@ -1,3 +1,4 @@
+"use strict";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -25,17 +26,15 @@ const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
-        width: '100%',
-        height: '100%',
-        marginTop: theme.spacing.unit * 3,
-        zIndex: 1,
-        overflow: 'hidden',
+        flexGrow: 1,
     },
     appFrame: {
+        height: '100%',
+        zIndex: 1,
+        overflow: 'hidden',
         position: 'relative',
         display: 'flex',
         width: '100%',
-        height: '100%',
     },
     appBar: {
         position: 'absolute',
@@ -66,7 +65,6 @@ const styles = theme => ({
     },
     drawerPaper: {
         position: 'relative',
-        height: '100%',
         width: drawerWidth,
     },
     drawerHeader: {
@@ -77,7 +75,6 @@ const styles = theme => ({
         ...theme.mixins.toolbar,
     },
     content: {
-        width: '100%',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
@@ -85,12 +82,6 @@ const styles = theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        height: 'calc(100% - 56px)',
-        marginTop: 56,
-        [theme.breakpoints.up('sm')]: {
-            height: 'calc(100% - 64px)',
-            marginTop: 64,
-        },
     },
     'content-left': {
         marginLeft: -drawerWidth,
@@ -153,24 +144,22 @@ class HomeView extends React.Component {
 
         const drawer = (
             <Drawer
-                type="persistent"
+                variant="persistent"
+                anchor={anchor}
+                open={open}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
-                anchor={anchor}
-                open={open}
             >
-                <div className={classes.drawerInner}>
-                    <div className={classes.drawerHeader}>
-                        <IconButton onClick={this.handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
-                    </div>
-                    <Divider />
-                    <List className={classes.list}>{mailFolderListItems}</List>
-                    <Divider />
-                    <List className={classes.list}>{otherMailFolderListItems}</List>
+                <div className={classes.drawerHeader}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
                 </div>
+                <Divider />
+                <List>{mailFolderListItems}</List>
+                <Divider />
+                <List>{otherMailFolderListItems}</List>
             </Drawer>
         );
 
@@ -204,9 +193,11 @@ class HomeView extends React.Component {
                                 >
                                     <MenuIcon />
                                 </IconButton>
-                                <Typography type="title" color="inherit" noWrap>
+
+                                <Typography variant="title" color="inherit" noWrap>
                                     {barTitle}
                                 </Typography>
+
 
                         </Toolbar>
                             </Grid>
@@ -231,10 +222,6 @@ class HomeView extends React.Component {
 
                {/*메세지*/}
                 {this.state.dialogForNoti}
-
-
-
-
             </div>
 
         );

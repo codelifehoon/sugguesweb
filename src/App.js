@@ -7,7 +7,6 @@ import TemplateManager from "./product/CommonComponet/TemplateManager";
 import GoogleMap from "./product/content/GoogleMap";
 
 
-
 class App extends Component {
     render() {
         let componentVal = new Object();
@@ -26,8 +25,10 @@ class App extends Component {
                             return (<Route path={"/"+ page.componentName} key={page.key} render={ ()  => <HomeView  templateSelectorKey={page.componentName} /> }/>);
                         }) }
 
-                        <Route path="/map" component={GoogleMap}/>
+                        <Route path="/Map" component={GoogleMap}/>
                         <Route component={HomeView}/>
+
+
                     </Switch>
                 </Router>
             </div>

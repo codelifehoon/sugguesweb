@@ -185,7 +185,7 @@ class PersistentDrawer extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
+                            <Typography variant="title" color="inherit" noWrap>
                                 제목을 입력하시오
                             </Typography>
                         </Toolbar>

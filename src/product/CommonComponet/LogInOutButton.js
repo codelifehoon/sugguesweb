@@ -10,17 +10,9 @@ import {Link} from "react-router-dom";
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
-        color:'white'
-
     },
-    leftIcon: {
-        marginRight: theme.spacing.unit,
-    },
-    rightIcon: {
-        marginLeft: theme.spacing.unit,
-    },
-    iconSmall: {
-        fontSize: 20,
+    input: {
+        display: 'none',
     },
 });
 
@@ -29,12 +21,11 @@ class LogInOutButton extends React.Component {
     constructor(props){
         super(props);
 
-        axios.get('http://localhost:3000/sv/auths/getAuthInfo')
+        axios.get('http://localhost:3000/sv/Auths/getAuthInfo')
             .then(res =>{
-
                 try{
-                    this.setState({siteInfo : res.data});
-                    if (this.state.siteInfo !== ''){
+                    this.setState({webCertInfo : res.data});
+                    if (this.state.webCertInfo !== ''){
                         this.setState({loginStr : '로그아웃'});
                     }
                 } catch (e){
@@ -45,12 +36,12 @@ class LogInOutButton extends React.Component {
     }
 
     state = {
-        siteInfo : '',
+        webCertInfo : '',
         loginStr : '로그인'
     }
 
     isLogin= () =>{
-        if (this.state.siteInfo !== '') {
+        if (this.state.webCertInfo !== '') {
             return true;
         }
         else{
@@ -65,7 +56,7 @@ class LogInOutButton extends React.Component {
         console.log(redirUrl);
         if (this.isLogin())
         {
-             window.location.href = '/sv/auths/setLogout/'  + redirUrl;
+             window.location.href = '/sv/Auths/setLogout/'  + redirUrl;
         }
         else{
              window.location.href = '/memberLogin';
@@ -88,6 +79,7 @@ class LogInOutButton extends React.Component {
 
 LogInOutButton.propTypes = {
     classes: propTypes.object.isRequired,
+
 };
 
 export default withStyles(styles)(LogInOutButton);

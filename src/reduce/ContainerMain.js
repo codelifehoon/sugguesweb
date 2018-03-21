@@ -23,8 +23,5 @@ let mapStatusToMainBodyContentProps = (state) =>{
     };
 };
 
-
 export  const SearchBarContainer = connect(mapStatusSearchBar,mapDispatchSearchBar)(SearchBar);
 export  const BodyContentContainer = connect(mapStatusToMainBodyContentProps)(BodyContent);
-
-

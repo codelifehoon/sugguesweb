@@ -33,7 +33,7 @@ class BodyContentPanelList extends React.Component {
             <div className={classes.root}>
             { this.props.planList.map( d  => { return (
                 <Paper className={classes.root} elevation={4} key={d.planId}>
-                <Typography type="headline" component="h4">
+                <Typography variant="headline" component="h4">
                     {d.planStartDt}~{d.planEndDt} {d.planTitle}
                 </Typography>
                     <Typography component="p">

@@ -185,7 +185,7 @@ class PersistentDrawer extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
+                            <Typography variant="title" color="inherit" noWrap>
                                 제목을 입력하시오
                             </Typography>
                         </Toolbar>
@@ -202,20 +202,20 @@ class PersistentDrawer extends React.Component {
                         </div>
 
 
-                        <Typography type="title" color="inherit" noWrap>
+                        <Typography variant="title" color="inherit" noWrap>
                         The heavens of ascension is full of heaven.
                         The awareness of forgetting scholars is psychic.
                         </Typography>
 
                        <BaseGridLayout></BaseGridLayout>
 
-                        <Typography type="body1" color="inherit" >
+                        <Typography variant="body1" color="inherit" >
                             The heavens of ascension is full of heaven.
                             The awareness of forgetting scholars is psychic.
                         </Typography>
 
 
-                        <Typography type="body1" color="inherit" >
+                        <Typography variant="body1" color="inherit" >
                             The heavens of ascension is full of heaven.
                             The awareness of forgetting scholars is psychic.
                         </Typography>

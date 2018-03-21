@@ -55,7 +55,7 @@ class MemberLogin extends React.Component {
                     {/* title row*/}
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Typography type={'display1'} color={'primary'} align={'left'}>Welcome!</Typography>
+                        <Typography variant={'display1'} color={'primary'} align={'left'}>Welcome!</Typography>
                         <Typography gutterBottom align={'left'}>
                             {`
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit,
@@ -66,21 +66,21 @@ class MemberLogin extends React.Component {
                     
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('google')}}>
+                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('google')}}>
                             google
                         </Button>
                     </Grid>
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('facebook')}}>
+                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('facebook')}}>
                             facebook
                         </Button>
                     </Grid>
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  raised className={classes.button} onClick={() => {this.oAuthOnClick('naver')}}>
+                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('naver')}}>
                             naver
                         </Button>
                     </Grid>
