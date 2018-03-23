@@ -11,6 +11,9 @@ import {EditForMarkdown} from "../CommonComponet/EditForMarkdown";
 import {EditorState} from "draft-js";
 import axios from "axios/index";
 import * as Codes from "../util/Codes";
+import queryString from "query-string";
+import DialogForNoti from "../CommonComponet/DialogForNoti";
+
 
 
 
@@ -42,17 +45,18 @@ const styles = theme => ({
 class RegistryPlan extends React.Component {
 
     state = {
-        planName:'',
-        planLocation:'',
-        planLatLng:'',
-        planStartDt:dateformat(new Date(),'yyyy-mm-dd')+'T10:00',
-        planEndDt:dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
-        contentRaw :null,
+        title:'',
+        eventAddress:'',
+        eventLatLng:'',
+        eventStart: null, // dateformat(new Date(),'yyyy-mm-dd')+'T10:00',
+        eventEnd: null,  // dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
+        eventDesc :null,
         repeatKind : 'NONE',
-        searchTagValue : '',
+        tags : '',
         chipData: [],
         storageFlag:false,
         submitFlah:false,
+        dialogForNoti : null
     };
 
     componentDidMount(){
@@ -62,10 +66,11 @@ class RegistryPlan extends React.Component {
             this.setState(JSON.parse(cachedHits));
             // session Storage 갱신flag변경
         }
-        this.setState({storageFlag:true,submitFlah:false});
+        this.setState({storageFlag:true,submitFlah:false,dialogForNoti:null});
 
 
         this.initFormattedAddress();
+        // document.getElementById("title").focus();
 
     }
 
@@ -74,12 +79,12 @@ class RegistryPlan extends React.Component {
         const latLng = util.getUrlParam(this.props,'latLng');
         if (latLng !== '') {
 
-            this.setState({planLatLng : latLng });
+            this.setState({eventLatLng : latLng });
 
             GoogleAPI.getFormattedAddressFromLocation(latLng)
                 .then(formattedAddress => {
                     let a = formattedAddress;
-                    this.setState({planLocation:formattedAddress});
+                    this.setState({eventAddress:formattedAddress});
                 })
                 .catch(e => {});
         }
@@ -89,16 +94,16 @@ class RegistryPlan extends React.Component {
     handleDefaultChange  = (event) =>{
 
 
-        if (event.target.id === 'planName'){
-            this.setState({planName: event.target.value});
-        } else if (event.target.id === 'planLocation'){
-            this.setState({planLocation: event.target.value});
+        if (event.target.id === 'title'){
+            this.setState({title: event.target.value});
+        } else if (event.target.id === 'eventAddress'){
+            this.setState({eventAddress: event.target.value});
         }
         else if (event.target.id === 'datetimeLocalS'){
-            this.setState({planStartDt: event.target.value});
+            this.setState({eventStart: event.target.value});
         }
         else if (event.target.id === 'datetimeLocalE'){
-            this.setState({planEndDt: event.target.value});
+            this.setState({eventEnd: event.target.value});
         }
 
     };
@@ -135,12 +140,12 @@ class RegistryPlan extends React.Component {
 
             chipData.splice(arrayLength,0,addChipData);
 
-            this.setState({searchTagValue : ''});
+            this.setState({tags : ''});
             this.setState({chipData});
         }
     };
     searchTagChange = (event) =>{
-        this.setState({searchTagValue : event.target.value});
+        this.setState({tags : event.target.value});
     };
 
     handleSubmit = (event) => {
@@ -166,45 +171,46 @@ class RegistryPlan extends React.Component {
 
     onEditorStateChange = (contentRaw) =>{
 
-        this.setState({contentRaw:contentRaw});
+        this.setState({eventDesc:contentRaw});
     };
 
     onSubmitClick = () =>
     {
+
+
         if (this.state.submitFlah) { alert('등록중입니다.'); return;}
 
 
-
-/*
-        planName:'',
-            planLocation:'',
-        planLatLng:'',
-        planStartDt:dateformat(new Date(),'yyyy-mm-dd')+'T10:00',
-        planEndDt:dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
-        contentRaw :null,
-        repeatKind : '',
-        chipData: [],
-        storageFlag:false,
-        submitFlah:false,
-        */
+        /*
+                title:'',
+                    eventAddress:'',
+                eventLatLng:'',
+                eventStart:dateformat(new Date(),'yyyy-mm-dd')+'T10:00',
+                eventEnd:dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
+                eventDesc :null,
+                repeatKind : '',
+                chipData: [],
+                storageFlag:false,
+                submitFlah:false,
+                */
         const  jsonValue = {
-            eventDesc: this.state.contentRaw,
-            eventEnd: new Date(this.state.planEndDt),
+            eventDesc: this.state.eventDesc,
+            eventEnd: new Date(this.state.eventEnd),
             eventLocations: [
                 {
-                    address: this.state.planLocation,
+                    address: this.state.eventAddress,
                     addressDtls: '',
-                    latitude: this.state.planLatLng.lat,
-                    longitude: this.state.planLatLng.lng,
+                    latitude: this.state.eventLatLng.lat,
+                    longitude: this.state.eventLatLng.lng,
                     useYn: 'Y',
                 }
             ],
-            eventStart: new Date(this.state.planStartDt),
+            eventStart: new Date(this.state.eventStart),
             refPath: '',
             repeatKind: this.state.repeatKind,
             stat: 'S2',
-            tags: this.state.searchTagValue,
-            title: this.state.planName
+            tags: this.state.tags,
+            title: this.state.title
         };
 
 
@@ -214,18 +220,71 @@ class RegistryPlan extends React.Component {
                     ,{withCredentials: true, headers: {'Content-Type': 'application/json'}}
             )
             .then(res =>{
-                console.error('>>> :');
                 this.setState({submitFlah : false});
+                this.addSuccessDlg(res);
 
-            }).catch(err => { console.error('>>>> :' + err);  this.setState({submitFlah : false});});
-
+            }).catch(err => { console.error('>>>> :' + err);  this.setState({submitFlah : false}); this.addFailDlg(err); });
 
     }
+
+    addSuccessDlg = (res) => {
+        this.setState({dialogForNoti : this.addSuccessDlgGen() });
+    };
+
+    addSuccessDlgGen = ()=>{
+
+        this.setState({dialogForNoti : null });
+        const confirmButtons = [{ func:this.addSuccessGoMain , color : 'primary' , text : '메인이동'}
+                                ,{ func:this.addSuccessGoReReg  , color : 'primary' , text : '추가등록'}];
+
+        return (<DialogForNoti  dialogTitle={'등록완료'} dialogMessage={'일정 등록이 완료 되었습니다.다음 진행 과정을 선택 해주세요'} confirmButtons={confirmButtons} />);
+    }
+
+    addSuccessGoMain = () =>{
+        this.props.history.push('/');
+
+    }
+
+    addSuccessGoReReg = () =>{
+
+        this.setState ( {
+            title:'',
+            eventAddress:'',
+            eventLatLng:'',
+            eventStart:  'none', //공백으로 했을때 선택 값 변경이 안되어서..
+            eventEnd:  'none',//dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
+            eventDesc :'#입력해주세요#',
+            repeatKind : 'NONE',
+            tags : '',
+            chipData: [],
+            storageFlag:true,
+            submitFlah:false,
+            dialogForNoti : null
+            });
+
+        // 실시간 처리시 dlg 사라지기전의 action이어서 적용된것이 다리얼로그 사라질때 빠짐
+        // 비동기 처리로 순차처리 끝나고 실행 될수 있도록 조치
+        Promise.resolve().then(()=>document.querySelector("div input[id=title]").focus());
+
+    }
+
+
+    addFailDlg = (err) => {
+        this.setState({dialogForNoti : null });
+        this.setState({dialogForNoti : this.addFailDlgGen(err) });
+    }
+
+    addFailDlgGen = (err) => {
+        return (<DialogForNoti  dialogTitle={'등록오류'} dialogMessage={err.toString()} />);
+    }
+
+
+
     render() {
 
 
     const  {classes} = this.props;
-    const  {storageFlag} = this.state;
+    const  {storageFlag,dialogForNoti} = this.state;
 
         return (
             <div>
@@ -236,12 +295,14 @@ class RegistryPlan extends React.Component {
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
+                            // ref={(ref) => { this.title = ref; }}
+                            // autoFocus={true}
                             id="planName"
                             label="(필수)입력 해주세요."
                             className={classes.textField}
                             helperText="입력 "
                             margin="normal"
-                            value={this.state.planName}
+                            value={this.state.title}
                             onChange={this.handleDefaultChange}
                         />
                     </Grid>
@@ -255,7 +316,7 @@ class RegistryPlan extends React.Component {
                             className={classes.textField}
                             helperText=""
                             margin="normal"
-                            value={this.state.planLocation}
+                            value={this.state.eventAddress}
                             onChange={this.handleDefaultChange}
                         />
                     </Grid>
@@ -271,8 +332,8 @@ class RegistryPlan extends React.Component {
                             id="datetimeLocalS"
                             label="시작"
                             type="datetime-local"
-                            defaultValue={this.state.planStartDt}
-                            value={this.state.planStartDt}
+                            defaultValue={this.state.eventStart}
+                            value={this.state.eventStart}
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
@@ -287,8 +348,8 @@ class RegistryPlan extends React.Component {
                             id="datetimeLocalE"
                             label="끝"
                             type="datetime-local"
-                            defaultValue={this.state.planEndDt}
-                            value={this.state.planEndDt}
+                            defaultValue={this.state.eventEnd}
+                            value={this.state.eventEnd}
                             className={classes.textField}
                             InputLabelProps={{shrink: true,}}
                             onChange={this.handleDefaultChange}
@@ -335,7 +396,7 @@ class RegistryPlan extends React.Component {
 
                     <Grid item xs={12} >
                         {
-                            storageFlag  ? <EditForMarkdown onEditorStateChange={this.onEditorStateChange} initRowText={this.state.contentRaw}/> : ''
+                            storageFlag  ? <EditForMarkdown onEditorStateChange={this.onEditorStateChange} initRowText={this.state.eventDesc}/> : ''
 
                         }
 
@@ -351,7 +412,7 @@ class RegistryPlan extends React.Component {
                             placeholder="여러건 추가 가능 합니다.(최대10건)"
                             className={classes.textField}
                             margin="normal"
-                            value={this.state.searchTagValue}
+                            value={this.state.tags}
                             // onKeyPress={this.searchTagKeyDown}
                             onChange={this.searchTagChange}
                         />
@@ -384,6 +445,12 @@ class RegistryPlan extends React.Component {
                         </Grid>
                     </Grid>
                 </Grid>
+
+                {/*alert msg*/}
+                {dialogForNoti}
+
+                {/*<input ref={input => { this.testNameInput = input; }} />*/}
+
             </div>
         );
 }
