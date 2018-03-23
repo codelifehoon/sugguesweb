@@ -14,48 +14,43 @@ export const mailFolderListItems = (
             <ListItemIcon>
                 <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary="Inbox" />
+            <ListItemText primary="나의등록관리" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
                 <StarIcon />
             </ListItemIcon>
-            <ListItemText primary="Starred" />
+            <ListItemText primary="관심사항" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
                 <SendIcon />
             </ListItemIcon>
-            <ListItemText primary="Send mail" />
+            <ListItemText primary="푸시관리" />
         </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
-        </ListItem>
+
     </div>
 );
 
 export const otherMailFolderListItems = (
     <div>
-        <ListItem button>
-            <ListItemIcon>
-                <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary="All mail" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Trash" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <ReportIcon />
-            </ListItemIcon>
-            <ListItemText primary="Spam" />
-        </ListItem>
+        {/*<ListItem button>*/}
+        {/*<ListItemIcon>*/}
+        {/*<MailIcon />*/}
+        {/*</ListItemIcon>*/}
+        {/*<ListItemText primary="All mail" />*/}
+        {/*</ListItem>*/}
+        {/*<ListItem button>*/}
+        {/*<ListItemIcon>*/}
+        {/*<DeleteIcon />*/}
+        {/*</ListItemIcon>*/}
+        {/*<ListItemText primary="Trash" />*/}
+        {/*</ListItem>*/}
+        {/*<ListItem button>*/}
+        {/*<ListItemIcon>*/}
+        {/*<ReportIcon />*/}
+        {/*</ListItemIcon>*/}
+        {/*<ListItemText primary="Spam" />*/}
+        {/*</ListItem>*/}
     </div>
 );

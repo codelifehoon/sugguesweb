@@ -2,15 +2,28 @@ import React from 'react';
 import Grid from "material-ui/Grid/Grid";
 import withStyles from "material-ui/styles/withStyles";
 import PropType from 'prop-types';
-import  BodyContentPanelList from './BodyContentPanelList';
 import * as dateformat from "dateformat";
 import DateClickSelecter from "../CommonComponet/DateClickSelecter";
-
+import ContentReviewCardList from "./ContentReviewCardList";
+import 'typeface-roboto';
 
 const styles = theme => ({
     alignCenter : {
         marginTop :'auto',
         marginBottom:'auto'
+    },
+    nextButton: {
+        margin: theme.spacing.unit,
+        width  : '80%',
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
     },
 });
 
@@ -40,8 +53,9 @@ class BodyContent extends React.Component {
 
             {/*2 row*/}
             <Grid item xs={12}>
-                <BodyContentPanelList></BodyContentPanelList>
+                <ContentReviewCardList></ContentReviewCardList>
             </Grid>
+
 
         </Grid>
 
