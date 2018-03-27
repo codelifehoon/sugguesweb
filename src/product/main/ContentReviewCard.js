@@ -16,6 +16,8 @@ import htmlReactParser from 'html-react-parser';
 
 import dateformat from 'dateformat';
 import {Badge, Snackbar} from "material-ui";
+import axios from "axios/index";
+import SnaShareForKR from "../CommonComponet/SnaShareForKR";
 
 
 
@@ -46,15 +48,32 @@ const styles = theme => ({
 });
 
 class ContentReviewCard extends React.Component {
-    state = {   expanded: false ,
+    state = {   expandedDesc: false ,
+                expandedShare: false ,
                 snackbarOpen: false,
                 snackbarMessage:'',
                 snackbarVertical: 'top',
                 snackbarHorizontal: 'center',
-            };
+                eventContentNo : -1,
+                contentThumbupNo :-1,
+                contentAlarmNo :-1,
+                contentCommentCnt : -1,
+
+    };
+
+    componentDidMount(){
+
+        this.setState( {eventContentNo : this.props.content.eventContentNo,
+                            contentThumbupNo :this.props.content.contentThumbupNo,
+                            contentAlarmNo :this.props.content.contentAlarmNo,
+                            contentCommentCnt : this.props.content.contentCommentCnt,
+                            expandedDesc: this.props.expandedDesc,
+                            expandedShare : this.props.expandedShare,
+                        });
+    }
 
     handleExpandClick = () => {
-        this.setState({ expanded: !this.state.expanded });
+        this.setState({ expandedDesc: !this.state.expandedDesc });
     };
 
     getFormatDate = (eventStart,eventEnd) =>{
@@ -63,7 +82,7 @@ class ContentReviewCard extends React.Component {
         if (eventStart && eventEnd){
             retVal =  (
                 <div>
-                    기간: {dateformat(new Date(eventStart),'mm월 dd일')+' 10:00'} ~ {dateformat(new Date(eventEnd),'mm월 dd일')+' 10:00'}
+                    {dateformat(new Date(eventStart),'mm월 dd일')+' 10:00'} ~ {dateformat(new Date(eventEnd),'mm월 dd일')+' 10:00'}
                 </div>);
 
         }
@@ -73,29 +92,88 @@ class ContentReviewCard extends React.Component {
     }
 
     onAlarmAddBtn = () =>{
-        this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onAlarmAddBtn'});
+
+        // this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onAlarmAddBtn'});
+
+        const  {contentAlarmNo,eventContentNo} = this.state;
+
+
+        // 등록 된 후에 삭제할때
+        if (contentAlarmNo > 0) {
+
+            axios.patch('http://localhost:8080/Content/V1/UpdateContentAlarm/'+  contentAlarmNo +'/N'
+                ,{}
+                , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+            )
+                .then(res => { this.setState({contentAlarmNo : -1});})
+                .catch(err => { console.error('>>>> :' + err); });
+
+        }else{
+
+            //신규 알람 등록
+            const jsonValue = {
+                "eventContentNo": eventContentNo
+            };
+            axios.post('http://localhost:8080/Content/V1/AddContentAlarm'
+                , jsonValue
+                , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+                        )
+                .then(res => { this.setState({contentAlarmNo : res.data});})
+                .catch(err => { console.error('>>>> :' + err); });
+
+        }
+
     }
 
     onThumbUpBtn = () =>{
-        this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onThumbUpBtn'});
+
+        const  {contentThumbupNo,eventContentNo} = this.state;
+
+        // 등록 된 후에 삭제할때
+        if (contentThumbupNo > 0) {
+
+            axios.patch('http://localhost:8080/Content/V1/UpdateContentThumbUp/'+  contentThumbupNo +'/N'
+                ,{}
+                , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+            )
+                .then(res => { this.setState({contentThumbupNo : -1});})
+                .catch(err => { console.error('>>>> :' + err); });
+
+        }else{
+
+            //신규 알람 등록
+            const jsonValue = {
+                "eventContentNo": eventContentNo
+            };
+
+            axios.post('http://localhost:8080/Content/V1/AddContentThumbUp'
+                , jsonValue
+                , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+            )
+                .then(res => { this.setState({contentThumbupNo : res.data});})
+                .catch(err => { console.error('>>>> :' + err); });
+        }
+
     }
     onCommentListBtn = () =>{
         this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onCommentListBtn'});
     }
 
     onShareBtnBtn = () =>{
-        this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onShareBtnBtn'});
-    }
+        // this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onShareBtnBtn'});
+        this.setState({ expandedShare: !this.state.expandedShare });
 
+    }
 
     onClickSnackbarClose = () => {
         this.setState({ snackbarOpen: false });
     };
 
-
     render() {
-        const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage} = this.state;
-        const { classes ,content } = this.props;
+
+
+        const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage,contentThumbupNo,contentAlarmNo,contentCommentCnt} = this.state;
+        const { classes ,content ,initContentDescOpen} = this.props;
         const { eventDesc
             ,eventEnd
             ,eventLocations
@@ -105,7 +183,21 @@ class ContentReviewCard extends React.Component {
             ,title
             ,avatarUrl
             ,mainImageUrl
-            ,mainImageText} = this.props.content;
+            ,mainImageText
+            ,userNm} = this.props.content;
+        const avatarText = avatarUrl ? '' : userNm;
+        let alarmAddIconColor, thumbUpIconColor;
+
+
+        if (contentAlarmNo > 0 ) alarmAddIconColor = 'red';
+        else alarmAddIconColor = '';
+
+        if (contentThumbupNo > 0 ) thumbUpIconColor = 'red';
+        else thumbUpIconColor = '';
+
+
+
+
 
 
         const eventPeriod = this.getFormatDate(eventStart,eventEnd);
@@ -121,7 +213,7 @@ class ContentReviewCard extends React.Component {
                 <Card className={classes.card}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="Recipe" className={classes.avatar} src={avatarUrl}/>
+                            <Avatar aria-label="Recipe" className={classes.avatar} src={avatarUrl}>{avatarText}</Avatar>
                         }
                         // action={
                         //     <IconButton onClick={this.OnClickIconBtn}>
@@ -141,15 +233,17 @@ class ContentReviewCard extends React.Component {
                             {shortEventDesc}
                         </Typography>
                     </CardContent>
+
+
                     <CardActions className={classes.actions} disableActionSpacing>
-                        <IconButton  aria-label="Add to Alarm" onClick={this.onAlarmAddBtn}>
+                        <IconButton  aria-label="Add to Alarm" onClick={this.onAlarmAddBtn}  style={{color: alarmAddIconColor}} >
                             <AlarmAdd />
                         </IconButton>
-                        <IconButton  aria-label="Add to ThumbUp" onClick={this.onThumbUpBtn}>
+                        <IconButton  aria-label="Add to ThumbUp" onClick={this.onThumbUpBtn} style={{color: thumbUpIconColor}}>
                             <ThumbUp/>
                         </IconButton>
                         <IconButton aria-label="Add to favorites"  onClick={this.onCommentListBtn}>
-                            <Badge  badgeContent={10} color="secondary">
+                            <Badge  badgeContent={contentCommentCnt} color="secondary">
                                 <SpeakerNotes  />
                             </Badge>
                         </IconButton>
@@ -159,16 +253,22 @@ class ContentReviewCard extends React.Component {
                         </IconButton>
                         <IconButton
                             className={classnames(classes.expand, {
-                                [classes.expandOpen]: this.state.expanded,
+                                [classes.expandOpen]: this.state.expandedDesc,
                             })}
                             onClick={this.handleExpandClick}
-                            aria-expanded={this.state.expanded}
+                            aria-expanded={this.state.expandedDesc}
                             aria-label="Show more"
                         >
                             <ExpandMore/>
                         </IconButton>
                     </CardActions>
-                    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+
+                    <Collapse in={this.state.expandedShare} timeout="auto" unmountOnExit>
+                        <SnaShareForKR pathname={'https://github.com'}/>
+                    </Collapse>
+
+
+                    <Collapse in={this.state.expandedDesc} timeout="auto" unmountOnExit>
                         <CardContent>
                             <Typography paragraph>
                                 {htmlReactParser(eventDescHtml)}
@@ -200,5 +300,10 @@ ContentReviewCard.propTypes = {
     classes: PropTypes.object.isRequired,
     content: PropTypes.object.isRequired,
 };
+
+
+
+
+
 
 export default withStyles(styles)(ContentReviewCard);

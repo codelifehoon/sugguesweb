@@ -1,6 +1,7 @@
 import React from 'react';
 import MemberLogin from "../member/MemberLogin";
 import RegistryPlan from "../content/RegistryPlan";
+import ContentMain from "../content/ContentMain";
 
 
 class TemplateSelector  {
@@ -10,6 +11,7 @@ class TemplateSelector  {
             {componentName : 'main', componentObj: null , componentTitle:'welcome' , key:100},
             {componentName : 'memberLogin', componentObj: <MemberLogin/> , componentTitle:'로그인',key:200},
             {componentName : 'registryPlan', componentObj: <RegistryPlan/> , componentTitle:'등록',key:300},
+            {componentName : 'contentMain', componentObj: <ContentMain/> , componentTitle:'상세보기',key:400},
 
         ];
 

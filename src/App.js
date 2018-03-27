@@ -5,6 +5,7 @@ import './App.css';
 import IconBtn from "./component_test/IconBtn";
 import TemplateManager from "./product/CommonComponet/TemplateManager";
 import GoogleMap from "./product/content/GoogleMap";
+import ContentMain from "./product/content/ContentMain";
 
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                         }) }
 
                         <Route path="/Map" component={GoogleMap}/>
+                        {/*<Route path="/contentMain" component={ContentMain}/>*/}
                         <Route component={HomeView}/>
 
 

@@ -16,24 +16,15 @@ const styles = theme => ({
 
 
 class ContentReviewCardList extends React.Component {
-    state = {
-        expanded: null,
-    };
 
-    handleChange = panel => (event, expanded) => {
-        this.setState({
-            expanded: expanded ? panel : false,
-        });
-    };
 
     render() {
         const { classes } = this.props;
-        const { expanded } = this.state;
 
         return (
             <div className={classes.root}>
             { this.props.contentList.map( d  => { return (
-                <ContentReviewCard content={d}></ContentReviewCard>
+                <ContentReviewCard content={d} ></ContentReviewCard>
             )
             })}
 
@@ -55,6 +46,7 @@ ContentReviewCardList.propTypes = {
 
 ContentReviewCardList.defaultProps = {
     contentList: [{
+                    eventContentNo :1,
                     eventDesc: "# this **markd**own editer..&nbsp;",
                     eventEnd: "2018-03-22T01:05:53.257Z",
                     eventLocations: [
@@ -73,8 +65,15 @@ ContentReviewCardList.defaultProps = {
                     avatarUrl : 'https://lh5.googleusercontent.com/-l6AxNJNHOy4/AAAAAAAAAAI/AAAAAAAAIWg/WsSH3Ut8Mgg/photo.jpg?sz=50',
                     mainImageUrl : 'https://tercertestamentonet.files.wordpress.com/2015/03/audios.jpg',
                     mainImageText : 'bird',
+                    contentThumbupNo :101,
+                    contentAlarmNo :201,
+                    contentCommentCnt : 10,
+                    userNo:1,
+                    userId:'jangjaejoon',
+                    userNm:'장재훈',
+
                 },
-                {
+                {   eventContentNo :2,
                     eventDesc: "Pickles can be marinateed with diced celery, also try mash uping the soup with iced tea.",
                     eventEnd: "2018-03-22T01:05:53.257Z",
                     eventLocations: [
@@ -93,8 +92,15 @@ ContentReviewCardList.defaultProps = {
                     avatarUrl : '',
                     mainImageUrl : '',
                     mainImageText : '',
+                    contentThumbupNo :102,
+                    contentAlarmNo :202,
+                    contentCommentCnt : 5,
+                    userNo:2,
+                    userId:'jangjaejoon2',
+                    userNm:'장재훈2',
                 },
                 {
+                    eventContentNo :3,
                     eventDesc: "Truffels can be jumbled with aromatic lentils, also try garnishing the pilaf with lemon juice.",
                     eventEnd: "2018-03-22T01:05:53.257Z",
                     eventLocations: [
@@ -113,8 +119,15 @@ ContentReviewCardList.defaultProps = {
                     avatarUrl : '',
                     mainImageUrl : '',
                     mainImageText : '',
+                    contentThumbupNo :103,
+                    contentAlarmNo :203,
+                    contentCommentCnt : 0,
+                    userNo:3,
+                    userId:'jangjaejoon3',
+                    userNm:'장재훈3',
                 },
                 {
+                    eventContentNo :4,
                     eventDesc: "Rice can be seasoned with tender ramen, also try rubbing the fritters with hollandaise sauce.",
                     eventEnd: "2018-03-22T01:05:53.257Z",
                     eventLocations: [
@@ -133,6 +146,12 @@ ContentReviewCardList.defaultProps = {
                     avatarUrl : '',
                     mainImageUrl : '',
                     mainImageText : '',
+                    contentThumbupNo :104,
+                    contentAlarmNo :204,
+                    contentCommentCnt : 10,
+                    userNo:4,
+                    userId:'jangjaejoon4',
+                    userNm:'장재훈4aaaaaaaaaaaaa',
                 },
                 ]
 };
