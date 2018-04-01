@@ -1,23 +1,51 @@
 import React from 'react';
-import {Avatar, Grid, IconButton, Typography, withStyles} from "material-ui";
+import {Avatar, Button, Collapse, Grid, IconButton, TextField, Typography, withStyles} from "material-ui";
 import PropTypes from 'prop-types';
 import dateformat from 'dateformat';
 import classNames from 'classnames';
 import {MoreVert} from "material-ui-icons";
+import MoreVertMenu from "../CommonComponet/MoreVertMenu";
+import {getWebCertInfoCookie} from "../util/CommonUtils";
+import axios from "axios/index";
 
 const styles = theme => ({
     avatar: {
         backgroundColor: 'red[500]',
     },
     smallAvatar: {
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
     },
 
 });
 
 
 class ContentComment extends React.Component {
+
+
+    state = {
+        expandEditComment : false,
+        editCommentValue : '',
+    }
+
+    componentDidMount (){
+       this.setState({ editCommentValue : this.props.comment.commentDesc});
+    }
+
+    onCommentUpdate = (comment) => {
+
+        this.setState({ expandEditComment : !this.state.expandEditComment});
+        comment.commentDesc = this.state.editCommentValue;
+
+        this.props.onCommentUpdateRequested(comment);
+
+    }
+
+    editCommentChange = (e) => {
+
+        this.setState({editCommentValue: e.target.value});
+
+    }
 
     render() {
 
@@ -30,14 +58,18 @@ class ContentComment extends React.Component {
                 userNm,
                 createDt,
                 updateDt
-
             } = this.props.comment;
-        const { classes } = this.props;
-
-        const subComment = false;
-
+        const { classes ,comment} = this.props;
         const avatarText = avatarUrl ? '' : userNm;
+        const {editCommentValue,expandEditComment} = this.state;
+        let menuItems = null;
 
+        if (userHash === getWebCertInfoCookie().userHash) {
+             menuItems = { obj:[
+                                {key : 2,meneName:'수정',clickFunc : ()=> this.onCommentUpdate(comment)},
+                                {key : 3,meneName:'삭제',clickFunc : ()=> this.props.onCommentDelRequested(comment)},
+                                ]};
+        }
 
         return (<div>
             <Grid container>
@@ -45,37 +77,55 @@ class ContentComment extends React.Component {
                     <Avatar aria-label="Recipe" className={classNames(classes.avatar, classes.smallAvatar)} src={avatarUrl} >{avatarText}</Avatar>
                 </Grid>
                 <Grid item xs={9} align={'left'}>
-                    {dateformat(createDt,'yyyy-mm-dd')}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{dateformat(createDt,'yyyy-mm-dd')}
                 </Grid>
 
                 <Grid item xs={2} align={'right'}>
-                    <IconButton onClick={this.OnClickIconBtn}>
-                        <MoreVert />
-                    </IconButton>
+                    {menuItems ? <MoreVertMenu itemHeight={30} width={150}   menuItems={menuItems.obj}/> : ''}
                 </Grid>
 
-                    { !subComment ?
-                        (<div><Grid item xs={12}>
-                            <Typography gutterBottom align={'left'}>
-                                본문시작sadjsjajdksajdks 본문종료본문시작sadjsjajd
-                            </Typography>
-                        </Grid></div>)
-                        :
+                <Grid container>
 
-                        (
-                        <Grid container>
+                    <Grid item xs={1}/>
+                    <Grid item xs={11}>
+                        <Collapse in={!expandEditComment} timeout="auto" unmountOnExit>
+                        <Typography gutterBottom align={'left'}>
+                            {commentDesc}
+                        </Typography>
+                        </Collapse>
+                    </Grid>
 
-                            <Grid item xs={1}>*</Grid>
-                            <Grid item xs={11}>
-                            <Typography gutterBottom align={'left'}>
-                                대댓글본문시작sadjsjajdksajdks 본문종료본문시작sadjs
-                            </Typography></Grid>
-                        </Grid>)
-                    }
+                    <Grid item xs={1}/>
+                    <Grid item xs={8}>
+
+                        <Collapse in={expandEditComment} timeout="auto" unmountOnExit>
+                            <TextField
+                                id="editCommentInput"
+                                // label="Multiline"
+                                multiline
+                                rowsMax="5"
+                                value={editCommentValue}
+                                onChange={this.editCommentChange}
+                                // className={classes.textField}
+                                margin="normal"
+                                style={{width:'100%'}}
+                                autoFocus={true}
+                            />
+                        </Collapse>
+                    </Grid>
+                    <Grid item xs={3}>
+                        {expandEditComment ?
+                        <Button variant="raised" color="primary" size="small" onClick={ ()=>{this.onCommentUpdate(comment)}}>
+                            수정
+                        </Button>
+                        :''}
+                    </Grid>
+
+
+
 
                 </Grid>
-
-
+            </Grid>
         </div>);
     }
 }
@@ -83,8 +133,9 @@ class ContentComment extends React.Component {
 
 ContentComment.propTypes = {
     classes: PropTypes.object.isRequired,
+    onCommentDelRequested : PropTypes.func.isRequired,
+    onCommentUpdateRequested : PropTypes.func.isRequired,
 };
-
 
 
 export default withStyles(styles)(ContentComment);

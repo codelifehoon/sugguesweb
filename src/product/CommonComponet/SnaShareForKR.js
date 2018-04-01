@@ -1,6 +1,14 @@
 import React from 'react';
 import {FacebookButton, FacebookCount ,KaKaoTalkButton ,TwitterButton } from "react-social";
 import {Button} from "material-ui";
+import withStyles from "material-ui/styles/withStyles";
+
+
+
+const styles = theme => ({
+
+
+});
 
 
 
@@ -23,11 +31,11 @@ class SnaShareForKR extends React.Component {
         <div>
 
             <FacebookButton url={url} appId={faceBookAppId}>
-                <Button>FB</Button>
+                FB
             </FacebookButton>
 
             <TwitterButton url={url}>
-                <Button>TW</Button>
+                TW
             </TwitterButton>
 
 
@@ -37,4 +45,4 @@ class SnaShareForKR extends React.Component {
 }
 }
 
-export  default (SnaShareForKR);
+export  default withStyles(styles)(SnaShareForKR);

@@ -4,6 +4,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import ReducerFunctions from './reduce/ReducerFunctions'
 import registerServiceWorker from './registerServiceWorker';
+import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import App from './App';
 

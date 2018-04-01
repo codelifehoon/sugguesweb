@@ -24,7 +24,7 @@ class ContentReviewCardList extends React.Component {
         return (
             <div className={classes.root}>
             { this.props.contentList.map( d  => { return (
-                <ContentReviewCard content={d} ></ContentReviewCard>
+                <ContentReviewCard key={d.eventContentNo} content={d} ></ContentReviewCard>
             )
             })}
 
@@ -34,14 +34,9 @@ class ContentReviewCardList extends React.Component {
     }
 }
 
-
-
 ContentReviewCardList.propTypes = {
     classes: PropTypes.object.isRequired,
-    planList: PropTypes.array.isRequired,
 };
-
-
 
 
 ContentReviewCardList.defaultProps = {
@@ -71,87 +66,6 @@ ContentReviewCardList.defaultProps = {
                     userNo:1,
                     userId:'jangjaejoon',
                     userNm:'장재훈',
-
-                },
-                {   eventContentNo :2,
-                    eventDesc: "Pickles can be marinateed with diced celery, also try mash uping the soup with iced tea.",
-                    eventEnd: "2018-03-22T01:05:53.257Z",
-                    eventLocations: [
-                        {
-                            address: "Tus de rusticus habena, gratia domina.",
-                            addressDtls: "",
-                            latitude: 37.497889,
-                            longitude: 127.027616,
-                        }
-                    ],
-                    eventStart: "2018-03-22T01:05:53.257Z",
-                    refPath: "",
-                    repeatKind: "W1",
-                    tags: "#가나다 #나다라 #마바사",
-                    title: "Aususs ire, tanquam gratis heuretes.",
-                    avatarUrl : '',
-                    mainImageUrl : '',
-                    mainImageText : '',
-                    contentThumbupNo :102,
-                    contentAlarmNo :202,
-                    contentCommentCnt : 5,
-                    userNo:2,
-                    userId:'jangjaejoon2',
-                    userNm:'장재훈2',
-                },
-                {
-                    eventContentNo :3,
-                    eventDesc: "Truffels can be jumbled with aromatic lentils, also try garnishing the pilaf with lemon juice.",
-                    eventEnd: "2018-03-22T01:05:53.257Z",
-                    eventLocations: [
-                        {
-                            address: "Messis mechanice ducunt ad neuter fluctui.",
-                            addressDtls: "",
-                            latitude: 37.497889,
-                            longitude: 127.027616,
-                        }
-                    ],
-                    eventStart: "2018-03-22T01:05:53.257Z",
-                    refPath: "",
-                    repeatKind: "M1",
-                    tags: "#가나다 #나다라 #마바사",
-                    title: "Cedriums manducare, tanquam primus zelus.",
-                    avatarUrl : '',
-                    mainImageUrl : '',
-                    mainImageText : '',
-                    contentThumbupNo :103,
-                    contentAlarmNo :203,
-                    contentCommentCnt : 0,
-                    userNo:3,
-                    userId:'jangjaejoon3',
-                    userNm:'장재훈3',
-                },
-                {
-                    eventContentNo :4,
-                    eventDesc: "Rice can be seasoned with tender ramen, also try rubbing the fritters with hollandaise sauce.",
-                    eventEnd: "2018-03-22T01:05:53.257Z",
-                    eventLocations: [
-                        {
-                            address: "Sunt magisteres desiderium raptus, rusticus hydraes.",
-                            addressDtls: "",
-                            latitude: 37.497889,
-                            longitude: 127.027616,
-                        }
-                    ],
-                    eventStart: "2018-03-22T01:05:53.257Z",
-                    refPath: "",
-                    repeatKind: "Y1",
-                    tags: "#가나다 #나다라 #마바사",
-                    title: "Inner joys knows most definitions.",
-                    avatarUrl : '',
-                    mainImageUrl : '',
-                    mainImageText : '',
-                    contentThumbupNo :104,
-                    contentAlarmNo :204,
-                    contentCommentCnt : 10,
-                    userNo:4,
-                    userId:'jangjaejoon4',
-                    userNm:'장재훈4aaaaaaaaaaaaa',
                 },
                 ]
 };

@@ -1,67 +1,84 @@
 import React from 'react';
 import ContentComment from "./ContentComment";
+import PropTypes from 'prop-types';
+import axios from "axios/index";
+import {EditorState} from "draft-js";
 
 
 class ContentCommentList extends React.Component {
 
+
+
+    constructor(props){
+        super(props);
+        this.state = { commentList : props.commentList};
+
+    }
+    onCommentDelRequested = (comment) =>{
+
+        axios.patch('http://localhost:8080/Content/V1/deleteContentComment/'+  comment.contentCommentNo
+            ,{}
+            , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+        )
+            .then(res => {this.modifyComment('del',comment); })
+            .catch(err => { console.error('>>>> :' + err); });
+    }
+    onCommentUpdateRequested = (comment) =>{
+
+        const jsonValue = {
+            contentCommentNo: comment.contentCommentNo,
+            commentDesc: comment.commentDesc,
+        }
+        axios.patch('http://localhost:8080/Content/V1/updateContentComment'
+            ,jsonValue
+            , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
+        )
+            .then(res => { this.modifyComment('update',comment);})
+            .catch(err => { console.error('>>>> :' + err); });
+    }
+
+    modifyComment = (proc,comment) =>{
+        const {commentList}  = this.state;
+        let newCommentList = null;
+
+        if (proc === 'del')
+        {
+            newCommentList = commentList.filter((d) => {
+                return d.contentCommentNo !== comment.contentCommentNo
+            });
+        }
+        if (proc === 'update'){
+            newCommentList = commentList.map((d) => {
+                if (d.contentCommentNo == comment.contentCommentNo) d.commentDesc = comment.commentDesc
+                return d;
+            });
+
+        }
+
+
+        this.setState({ commentList : newCommentList});
+    }
+
+
     render() {
-        return (<div>
-            { this.props.commentList.map( d  => { return (
-                <ContentComment comment={d} ></ContentComment>
+
+        return (
+            <div>
+
+            { this.state.commentList.map( d  => { return (
+                <ContentComment key={d.contentCommentNo}
+                                comment={d}
+                                onCommentDelRequested={this.onCommentDelRequested}
+                                onCommentUpdateRequested={this.onCommentUpdateRequested}></ContentComment>
             )
-            })}
+            }) }
         </div>);
     }
 }
 
-ContentCommentList.propTypes = {};
-
-
-ContentCommentList.defaultProps = {
-    commentList : [
-        {contentCommentNo : 1,
-            eventContentNo : 1,
-            userHash :'culina ',
-            commentDesc : 'The enlightened emptiness of manifestation is to experience with history. ',
-            commentPw :'',
-            avatarUrl : 'https://lh5.googleusercontent.com/-l6AxNJNHOy4/AAAAAAAAAAI/AAAAAAAAIWg/WsSH3Ut8Mgg/photo.jpg?sz=50',
-            userNm :'JJH1',
-            createDt: new Date(),
-            updateDt:new Date()
-        },
-        {contentCommentNo : 2,
-            eventContentNo : 2,
-            userHash :'heuretes ',
-            commentDesc : 'The core of your milks will disturb cosmically when you hear that purpose is the yogi.',
-            commentPw :'',
-            avatarUrl : '',
-            userNm :'JJH2',
-            createDt: new Date(),
-            updateDt:new Date()
-        },
-        {contentCommentNo : 3,
-            eventContentNo : 3,
-            userHash :'',
-            commentDesc : 'When the moon of suffering grasps the fears of the cow, the attraction will know doer.',
-            commentPw :'1234',
-            avatarUrl : '',
-            userNm :'JJH3',
-            createDt: new Date(),
-            updateDt:new Date()},
-        {contentCommentNo : 4,
-            eventContentNo : 4,
-            userHash :'Ignigena peregrinationes, tanquam fortis guttus.',
-            commentDesc : 'One unconditional peace i give you: reject each other.',
-            commentPw :'',
-            avatarUrl : '',
-            userNm :'JJH4',
-            createDt: new Date(),
-            updateDt:new Date()},
-
-
-        ]
-}
-
+ContentCommentList.propTypes = {
+    commentList : PropTypes.array
+};
 
 
 export default (ContentCommentList);

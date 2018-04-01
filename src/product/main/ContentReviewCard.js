@@ -18,6 +18,7 @@ import dateformat from 'dateformat';
 import {Badge, Snackbar} from "material-ui";
 import axios from "axios/index";
 import SnaShareForKR from "../CommonComponet/SnaShareForKR";
+import {withRouter} from "react-router-dom";
 
 
 
@@ -54,10 +55,10 @@ class ContentReviewCard extends React.Component {
                 snackbarMessage:'',
                 snackbarVertical: 'top',
                 snackbarHorizontal: 'center',
-                eventContentNo : -1,
-                contentThumbupNo :-1,
-                contentAlarmNo :-1,
-                contentCommentCnt : -1,
+                eventContentNo : 0,
+                contentThumbupNo :null,
+                contentAlarmNo :null,
+                contentCommentCnt : 0,
 
     };
 
@@ -99,13 +100,13 @@ class ContentReviewCard extends React.Component {
 
 
         // 등록 된 후에 삭제할때
-        if (contentAlarmNo > 0) {
+        if (contentAlarmNo ) {
 
             axios.patch('http://localhost:8080/Content/V1/UpdateContentAlarm/'+  contentAlarmNo +'/N'
                 ,{}
                 , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
             )
-                .then(res => { this.setState({contentAlarmNo : -1});})
+                .then(res => { this.setState({contentAlarmNo : null});})
                 .catch(err => { console.error('>>>> :' + err); });
 
         }else{
@@ -130,13 +131,13 @@ class ContentReviewCard extends React.Component {
         const  {contentThumbupNo,eventContentNo} = this.state;
 
         // 등록 된 후에 삭제할때
-        if (contentThumbupNo > 0) {
+        if (contentThumbupNo ) {
 
             axios.patch('http://localhost:8080/Content/V1/UpdateContentThumbUp/'+  contentThumbupNo +'/N'
                 ,{}
                 , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
             )
-                .then(res => { this.setState({contentThumbupNo : -1});})
+                .then(res => { this.setState({contentThumbupNo : null});})
                 .catch(err => { console.error('>>>> :' + err); });
 
         }else{
@@ -156,7 +157,7 @@ class ContentReviewCard extends React.Component {
 
     }
     onCommentListBtn = () =>{
-        this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onCommentListBtn'});
+        this.props.history.push('/contentMain?eventContentNo=' + this.state.eventContentNo);
     }
 
     onShareBtnBtn = () =>{
@@ -170,6 +171,8 @@ class ContentReviewCard extends React.Component {
     };
 
     render() {
+
+
 
 
         const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage,contentThumbupNo,contentAlarmNo,contentCommentCnt} = this.state;
@@ -189,15 +192,11 @@ class ContentReviewCard extends React.Component {
         let alarmAddIconColor, thumbUpIconColor;
 
 
-        if (contentAlarmNo > 0 ) alarmAddIconColor = 'red';
+        if (contentAlarmNo  ) alarmAddIconColor = 'red';
         else alarmAddIconColor = '';
 
-        if (contentThumbupNo > 0 ) thumbUpIconColor = 'red';
+        if (contentThumbupNo ) thumbUpIconColor = 'red';
         else thumbUpIconColor = '';
-
-
-
-
 
 
         const eventPeriod = this.getFormatDate(eventStart,eventEnd);
@@ -229,9 +228,9 @@ class ContentReviewCard extends React.Component {
                         title={mainImageText}
                     />
                     <CardContent>
-                        <Typography component="p">
+
                             {shortEventDesc}
-                        </Typography>
+
                     </CardContent>
 
 
@@ -270,10 +269,7 @@ class ContentReviewCard extends React.Component {
 
                     <Collapse in={this.state.expandedDesc} timeout="auto" unmountOnExit>
                         <CardContent>
-                            <Typography paragraph>
                                 {htmlReactParser(eventDescHtml)}
-
-                            </Typography>
                         </CardContent>
                     </Collapse>
                 </Card>
@@ -303,7 +299,4 @@ ContentReviewCard.propTypes = {
 
 
 
-
-
-
-export default withStyles(styles)(ContentReviewCard);
+export default withStyles(styles)(withRouter(ContentReviewCard));

@@ -6,6 +6,7 @@ import * as dateformat from "dateformat";
 import DateClickSelecter from "../CommonComponet/DateClickSelecter";
 import ContentReviewCardList from "./ContentReviewCardList";
 import 'typeface-roboto';
+import axios from "axios/index";
 
 const styles = theme => ({
     alignCenter : {
@@ -28,21 +29,53 @@ const styles = theme => ({
 });
 
 
-
 class BodyContent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-        searchDate : dateformat(new Date(),'yyyy-mm-dd'),
+            searchDate : dateformat(new Date(),'yyyy-mm-dd'),
+            contentList: null
     };
     }
 
+    componentDidMount(){
+
+        axios.get('http://localhost:8080/Content/V1/findContentList/1/Sat%20Mar%2031%202018%2016%3A57%3A36%20GMT%2B0900%20(KST)/2/3'
+            ,{withCredentials: true, headers: {'Content-Type': 'application/json'}})
+            .then(res =>{
+                const data = res.data;
+                let jsonList = [];
+
+
+                for (let key in data.content){
+                    if(data.content.hasOwnProperty(key)) {
+
+                        let d = data.content[key];
+                        let contentTemp = Object.assign({},d.eventContent,d.user);
+
+                        contentTemp.contentThumbupNo   =d.contentThumbUp.contentThumbupNo;
+                        contentTemp.contentAlarmNo     =d.contentAlarm.contentAlarmNo;
+                        contentTemp.contentCommentCnt  =d.commentCnt;
+                        contentTemp.mainImageUrl       ='https://tercertestamentonet.files.wordpress.com/2015/03/audios.jpg';
+                        contentTemp.mainImageText      = 'bird';
+                        jsonList.push(contentTemp);
+
+
+                    }
+                }
+
+                this.setState({contentList:jsonList});
+            })
+            .catch(err => { console.log('>>>> :' + err); });
+
+    }
 
 
     render() {
 
-    const  {classes} = this.props;
+        const  {classes} = this.props;
+        const  {contentList} = this.state;
 
     return (
 
@@ -53,10 +86,8 @@ class BodyContent extends React.Component {
 
             {/*2 row*/}
             <Grid item xs={12}>
-                <ContentReviewCardList></ContentReviewCardList>
+                {contentList ? <ContentReviewCardList contentList={contentList}></ContentReviewCardList> : ''}
             </Grid>
-
-
         </Grid>
 
 

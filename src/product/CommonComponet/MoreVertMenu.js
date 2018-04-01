@@ -3,40 +3,34 @@ import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 
-const options = [
-    'None',
-    'Atria',
-    'Callisto',
-    'Dione',
-    'Ganymede',
-    'Hangouts Call',
-    'Luna',
-    'Oberon',
-    'Phobos',
-    'Pyxis',
-    'Sedna',
-    'Titania',
-    'Triton',
-    'Umbriel',
-];
-
-const ITEM_HEIGHT = 48;
-
 class MoreVertMenu extends React.Component {
     state = {
         anchorEl: null,
     };
 
-    handleClick = event => {
+    onVertBtnClick = event => {
+        console.log('###########');
+        console.log(event.currentTarget);
         this.setState({ anchorEl: event.currentTarget });
     };
 
-    handleClose = () => {
+    onMenuClose = () => {
+        console.log('###onMenuClose');
+        this.setState({ anchorEl: null });
+    };
+
+    onMenuItemClose = menuItem => {
+        console.log('###onMenuItemClose');
+
+
+        menuItem.clickFunc();
+
         this.setState({ anchorEl: null });
     };
 
     render() {
         const { anchorEl } = this.state;
+        const {itemHeight,width,menuItems} = this.props;
 
         return (
             <div>
@@ -44,7 +38,7 @@ class MoreVertMenu extends React.Component {
                     aria-label="More"
                     aria-owns={anchorEl ? 'long-menu' : null}
                     aria-haspopup="true"
-                    onClick={this.handleClick}
+                    onClick={this.onVertBtnClick}
                 >
                     <MoreVertIcon />
                 </IconButton>
@@ -52,23 +46,34 @@ class MoreVertMenu extends React.Component {
                     id="long-menu"
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
-                    onClose={this.handleClose}
+                    onClose={this.onMenuClose}
                     PaperProps={{
                         style: {
-                            maxHeight: ITEM_HEIGHT * 4.5,
-                            width: 200,
+                            maxHeight: {itemHeight} * 4.5,
+                            width: {width},
                         },
                     }}
                 >
-                    {options.map(option => (
-                        <MenuItem key={option} selected={option === 'Pyxis'} onClick={this.handleClose}>
-                            {option}
+                    {menuItems.map(menuItem => (
+                        <MenuItem key={menuItem.key}  onClick={()=>{this.onMenuItemClose(menuItem)}}>
+                            {menuItem.meneName}
                         </MenuItem>
                     ))}
                 </Menu>
             </div>
         );
     }
+}
+
+
+MoreVertMenu.defaultProps = {
+    itemHeight :  30,
+    width : 150,
+    menuItems : [{key : 1,meneName:'Armarium',clickFunc : ()=> alert('key1')},
+                {key : 2,meneName:'Armarium1',clickFunc : ()=> alert('key2')},
+                {key : 3,meneName:'Armarium2',clickFunc : ()=> alert('key3')},
+                {key : 4,meneName:'Armarium3',clickFunc : ()=> alert('key4')},
+                ]
 }
 
 export default (MoreVertMenu);
