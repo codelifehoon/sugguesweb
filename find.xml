@@ -7,9 +7,8 @@
     <option name="REGULAR_EXPRESSIONS" value="true" />
     <option name="LOCAL_REGULAR_EXPRESSIONS" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
-    <option name="FILE_MASK" value="*.xml,*.java" />
+    <option name="FILE_MASK" value="*.*" />
     <recentFileMasks>
-      <mask>*.ㅓㄴ</mask>
       <mask>*/</mask>
       <mask>*.jva</mask>
       <mask>*.jv</mask>
@@ -33,12 +32,13 @@
       <mask>*.ja</mask>
       <mask>*.jav</mask>
       <mask>*.</mask>
-      <mask>*.java</mask>
       <mask>*.jsp</mask>
-      <mask>*</mask>
       <mask>*.js</mask>
       <mask>*.xml</mask>
       <mask>*.xml,*.java</mask>
+      <mask>*</mask>
+      <mask>*.java</mask>
+      <mask>*.*</mask>
     </recentFileMasks>
   </component>
 </application>
