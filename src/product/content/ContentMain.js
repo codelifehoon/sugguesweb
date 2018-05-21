@@ -52,13 +52,9 @@ class ContentMain extends React.Component {
                 contentTemp.contentThumbupNo   =d.contentThumbUp.contentThumbupNo;
                 contentTemp.contentAlarmNo     =d.contentAlarm.contentAlarmNo;
                 contentTemp.contentCommentCnt  =d.commentCnt;
-                contentTemp.mainImageUrl       ='https://tercertestamentonet.files.wordpress.com/2015/03/audios.jpg';
-                contentTemp.mainImageText      = 'bird';
 
                 this.setState({content:contentTemp});
                 this.initCommentList(eventContentNo);
-                console.log('###################');
-                console.log(contentTemp);
 
             })
             .catch(err => { console.log('>>>> :' + err); });
@@ -77,7 +73,7 @@ class ContentMain extends React.Component {
                         userHash :d.user.userHash,
                         commentDesc : d.contentComment.commentDesc,
                         commentPw :'',
-                        avatarUrl : d.user.avatarUrl,
+                        userPhotos : d.user.userPhotos,
                         userNm :d.user.userNm,
                         createDt: d.contentComment.createDt,
                         updateDt: d.contentComment.updateDt
@@ -135,7 +131,7 @@ class ContentMain extends React.Component {
                                 userHash : user.userHash,
                                 commentDesc : cc.commentDesc,
                                 commentPw :'',
-                                avatarUrl : user.avatarUrl,
+                                userPhotos : user.userPhotos,
                                 userNm :user.userNm,
                                 createDt: new Date(),
                                 updateDt:new Date()
@@ -162,17 +158,16 @@ class ContentMain extends React.Component {
 
     }
 
+
     render() {
         const {content} = this.state;
         const {expandAddComment,addCommentValue,webCertInfo,commentList,initContentStatus} = this.state;
 
         return (<div>
-                <br/><br/>
-
                 {/*ContentReviewCard에 보여줄 정보를 전달 가능할때 화면에 읽어들임*/}
 
                 {   initContentStatus ?
-                    <ContentReviewCard content={content} from={'ContentMain'} expandedDesc={true} expandedShare={true}/>
+                    <ContentReviewCard content={content} refBy={'ContentMain'} expandedDesc={true} expandedShare={true}/>
                     : ''}
                 <div>
 
@@ -212,36 +207,6 @@ class ContentMain extends React.Component {
 
 
 
-// ContentMain.defaultProps = {
-//     content: {
-//         eventContentNo :1,
-//         eventDesc: "# this **markd**own editer..&nbsp;",
-//         eventEnd: "2018-03-22T01:05:53.257Z",
-//         eventLocations: [
-//             {
-//                 address: "Castus bulla hic promissios messor est.",
-//                 addressDtls: "",
-//                 latitude: 37.497889,
-//                 longitude: 127.027616,
-//             }
-//         ],
-//         eventStart: "2018-03-22T01:05:53.257Z",
-//         refPath: "",
-//         repeatKind: "NONE",
-//         tags: "#가나다 #나다라 #마바사",
-//         title: "Assimilatios prarere, tanquam albus canis.",
-//         avatarUrl : 'https://lh5.googleusercontent.com/-l6AxNJNHOy4/AAAAAAAAAAI/AAAAAAAAIWg/WsSH3Ut8Mgg/photo.jpg?sz=50',
-//         mainImageUrl : 'https://tercertestamentonet.files.wordpress.com/2015/03/audios.jpg',
-//         mainImageText : 'bird',
-//         contentThumbupNo :101,
-//         contentAlarmNo :201,
-//         contentCommentCnt : 10,
-//         userNo:1,
-//         userId:'jangjaejoon',
-//         userNm:'장재훈',
-//     },
-//
-// };
 
 
 ContentMain.propTypes = {};

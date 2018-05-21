@@ -63,7 +63,10 @@ class RegistryPlan extends React.Component {
 
         const cachedHits = sessionStorage.getItem('registryPlan');
         if (cachedHits) {
-            this.setState(JSON.parse(cachedHits));
+
+            let cacheObj = JSON.parse(cachedHits);
+            cacheObj.eventDesc = '';        // 화면전환 후 상품상세는 초기화 한다.( 복구시 잘안되어서.. 지금은 복구 없는 상황이 좋을듯..)
+            this.setState(cacheObj);
             // session Storage 갱신flag변경
         }
         this.setState({storageFlag:true,submitFlah:false,dialogForNoti:null});
@@ -94,15 +97,17 @@ class RegistryPlan extends React.Component {
     handleDefaultChange  = (event) =>{
 
 
+        let str  = event.target.id;
+        console.log(str);
         if (event.target.id === 'title'){
             this.setState({title: event.target.value});
         } else if (event.target.id === 'eventAddress'){
             this.setState({eventAddress: event.target.value});
         }
-        else if (event.target.id === 'datetimeLocalS'){
+        else if (event.target.id === 'eventStart'){
             this.setState({eventStart: event.target.value});
         }
-        else if (event.target.id === 'datetimeLocalE'){
+        else if (event.target.id === 'eventEnd'){
             this.setState({eventEnd: event.target.value});
         }
 
@@ -160,6 +165,7 @@ class RegistryPlan extends React.Component {
 
     onLinkClick = () => {
 
+        let stateStr = JSON.stringify(this.state);
         sessionStorage.setItem('registryPlan', JSON.stringify(this.state));
         this.props.history.push('/Map');
 
@@ -176,7 +182,6 @@ class RegistryPlan extends React.Component {
 
     onSubmitClick = () =>
     {
-
 
         if (this.state.submitFlah) { alert('등록중입니다.'); return;}
 
@@ -195,7 +200,6 @@ class RegistryPlan extends React.Component {
                 */
         const  jsonValue = {
             eventDesc: this.state.eventDesc,
-            eventEnd: new Date(this.state.eventEnd),
             eventLocations: [
                 {
                     address: this.state.eventAddress,
@@ -206,6 +210,7 @@ class RegistryPlan extends React.Component {
                 }
             ],
             eventStart: new Date(this.state.eventStart),
+            eventEnd: new Date(this.state.eventEnd),
             refPath: '',
             repeatKind: this.state.repeatKind,
             stat: 'S2',
@@ -251,11 +256,10 @@ class RegistryPlan extends React.Component {
             title:'',
             eventAddress:'',
             eventLatLng:'',
-            eventStart:  'none', //공백으로 했을때 선택 값 변경이 안되어서..
-            eventEnd:  'none',//dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
+            eventStart:  null, //공백으로 했을때 선택 값 변경이 안되어서..
+            eventEnd:  null,//dateformat(new Date(),'yyyy-mm-dd')+'T18:00',
             eventDesc :'#입력해주세요#',
             repeatKind : 'NONE',
-            tags : '',
             chipData: [],
             storageFlag:true,
             submitFlah:false,
@@ -279,7 +283,6 @@ class RegistryPlan extends React.Component {
     }
 
 
-
     render() {
 
 
@@ -297,7 +300,7 @@ class RegistryPlan extends React.Component {
                         <TextField
                             // ref={(ref) => { this.title = ref; }}
                             // autoFocus={true}
-                            id="planName"
+                            id="title"
                             label="(필수)입력 해주세요."
                             className={classes.textField}
                             helperText="입력 "
@@ -311,7 +314,7 @@ class RegistryPlan extends React.Component {
                     <Grid item xs={1}/>
                     <Grid item xs={8}>
                         <TextField
-                            id="planLocation"
+                            id="eventAddress"
                             label="위치를 선택 또는 입력 해주세요."
                             className={classes.textField}
                             helperText=""
@@ -329,15 +332,13 @@ class RegistryPlan extends React.Component {
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
-                            id="datetimeLocalS"
-                            label="시작"
-                            type="datetime-local"
+                            id="eventStart"
+                            label="시작일"
+                            type="date"
                             defaultValue={this.state.eventStart}
                             value={this.state.eventStart}
                             className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
+                            InputLabelProps={{shrink: true,}}
                             onChange={this.handleDefaultChange}
                         />
                     </Grid>
@@ -345,9 +346,9 @@ class RegistryPlan extends React.Component {
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
                         <TextField
-                            id="datetimeLocalE"
-                            label="끝"
-                            type="datetime-local"
+                            id="eventEnd"
+                            label="종료일"
+                            type="date"
                             defaultValue={this.state.eventEnd}
                             value={this.state.eventEnd}
                             className={classes.textField}
@@ -355,7 +356,7 @@ class RegistryPlan extends React.Component {
                             onChange={this.handleDefaultChange}
                         />
                     </Grid>
-
+{/*
 
                     <Grid item xs={12}>
                         <Typography  variant="body1" gutterBottom>
@@ -392,14 +393,14 @@ class RegistryPlan extends React.Component {
                             />
                         </Typography>
                     </Grid>
-
+*/}
 
                     <Grid item xs={12} >
+                        <br/>
                         {
                             storageFlag  ? <EditForMarkdown onEditorStateChange={this.onEditorStateChange} initRowText={this.state.eventDesc}/> : ''
 
                         }
-
                     </Grid>
 
 

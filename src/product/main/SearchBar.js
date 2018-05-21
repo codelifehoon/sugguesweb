@@ -7,6 +7,9 @@ import Grid from "material-ui/Grid/Grid";
 import Typography from "material-ui/Typography/Typography";
 import PropTypes from 'prop-types';
 import axios from "axios/index";
+import DateClickSelecter from "../CommonComponet/DateClickSelecter";
+import * as dateformat from "dateformat";
+import {doIntergateSearch} from "../util/CommonUtils";
 
 const styles = theme =>({
 });
@@ -16,7 +19,8 @@ class SearchBar extends React.Component{
 
 
     state ={
-        searchValue : '',
+        period: '모든날짜',
+        searchSentence : 'initSearch',
         autoCompliteList :[]
     };
 
@@ -30,21 +34,61 @@ class SearchBar extends React.Component{
             .then(res =>{ this.setState({autoCompliteList : res.data});})
             .catch(err => { console.log('>>>> :' + err); });
 
+        this.doSearch();
 
     };
 
 
+    doSearch = () =>{
+        const {period,searchSentence}  = this.state;
 
-    searchTextChange = (  newValue  ) => {
-        this.setState({ searchValue : newValue});
+        doIntergateSearch(this.props.notiIntergrateSearch,period,searchSentence,0,0,0);
+
+
+        // let today  = new Date();
+        //
+        // const reqUrl = 'http://localhost:8080/Content/V1/findContentList'
+        //     + '/' + searchSentence
+        //     + '/' + period
+        //     + '/0/0';
+        //
+        // console.debug(reqUrl);
+        //
+        // axios.get(reqUrl
+        //     ,{withCredentials: true, headers: {'Content-Type': 'application/json'}})
+        //     .then(res =>{ this.props.notiIntergrateSearch(res.data) } )
+        //     .catch(err => { console.log('>>>> :' + err); });
+
+
+    }
+
+
+    /*
+    onTextChange : 검색 값 창에서  변경시  검색텍스트 관리 및 상황에 따른 조회 실행
+         newValue: 변경된 검색값
+         isSearch : 검색 실행여부
+    * */
+    onTextChange = (newValue,isSearch) => {
+
+
+        this.setState({ searchSentence:encodeURIComponent(newValue)});
+        console.log('newValue:' + encodeURIComponent(newValue));
+        // this.props.notiSearchTextChange(newValue);
+
+        // status 변경이 비동기처리도 되는듯..  변경 후 바로 읽으려니 안되네..
+        if (isSearch) Promise.resolve().then(d => this.doSearch());
         // console.log(newValue);
-        this.props.notiSearchTextChange(newValue);
+    };
+
+    onDateChange = ( newDate  ) => {
+        this.setState({period:newDate});
+        Promise.resolve().then(d => this.doSearch());
     };
 
 
     doSearchButton = () =>
     {
-        this.props.notiSearchTextChange(this.state.searchValue);
+        this.props.notiIntergrateSearch(this.state.searchSentence);
         console.log('###doSearch###');
     }
 
@@ -56,17 +100,18 @@ class SearchBar extends React.Component{
             <div>
                 <Grid classes={classes.root}>
                     <Grid container classes={classes.row}>
+
                         <Grid item xs={1} classes={classes.col}></Grid>
                         <Grid item xs={9} classes={classes.col}  >
-                            <SearchInputBox onChange={this.searchTextChange} autoCompliteList={this.state.autoCompliteList}/>
-
+                            <SearchInputBox onChange={this.onTextChange} autoCompliteList={this.state.autoCompliteList}/>
                             </Grid>
                         <Grid item xs={2}  classes={classes.col}>
                             <Typography noWrap align={'left'}>
-                                <IconButton onClick={this.doSearchButton}><SearchIcon/></IconButton>
+                                <IconButton onClick={this.doSearch}><SearchIcon/></IconButton>
                             </Typography>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12} > <DateClickSelecter dateString={this.state.period} onChange={this.onDateChange}/></Grid>
                 </Grid>
             </div>
         );
@@ -75,11 +120,11 @@ class SearchBar extends React.Component{
 
 
 SearchBar.propTypes = {
-    notiSearchTextChange : PropTypes.func.isRequired,
+    notiIntergrateSearch : PropTypes.func.isRequired,
 }
 
 SearchBar.defaultProps = {
-    notiSearchTextChange : ()=> {},
+    notiIntergrateSearch : ()=> {},
 }
 
 

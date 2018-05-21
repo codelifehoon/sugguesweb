@@ -12,7 +12,7 @@ class App extends Component {
         let componentVal = new Object();
         let routeComponentList = TemplateManager.getTemplateList();
 
-        componentVal.root = 'rootName';
+        componentVal.root = 'roo`tName';
 
         return (
 

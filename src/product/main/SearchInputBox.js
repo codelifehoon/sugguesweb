@@ -121,8 +121,6 @@ class IntegrationAutosuggest extends React.Component {
         suggestions: [],
     };
 
-
-
     handleSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: getSuggestions(value,this.props.autoCompliteList),
@@ -136,22 +134,22 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     searchTextChange = (event, { newValue }) => {
-         // console.log(newValue);
-        this.setState({
-            value: newValue,
-        });
-
-        this.props.onChange(newValue);
-
+        this.setState({value: newValue,});
+        this.props.onChange(this.state.value,false);
     };
 
 
+    onFormSubmit = (e) => {
+        this.props.onChange(this.state.value,true);
+        e.preventDefault();
+}
 
     render() {
         const { classes } = this.props;
 
         return (
             <div >
+                <form onSubmit={this.onFormSubmit}>
                 <Autosuggest
                     theme={{
                         container: classes.container,
@@ -166,6 +164,7 @@ class IntegrationAutosuggest extends React.Component {
                     renderSuggestionsContainer={renderSuggestionsContainer}
                     getSuggestionValue={getSuggestionValue}
                     renderSuggestion={renderSuggestion}
+                    keyYouShouldPressToTriggerSubmit={13}   // enter 입력시 summit 호출되도록
                     inputProps={{
                         autoFocus: true,
                         classes,
@@ -174,6 +173,7 @@ class IntegrationAutosuggest extends React.Component {
                         onChange: this.searchTextChange,
                     }}
                 />
+                </form>
             </div>
         );
     }

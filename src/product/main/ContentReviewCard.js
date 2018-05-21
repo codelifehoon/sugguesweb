@@ -6,10 +6,10 @@ import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-
 import Collapse from 'material-ui/transitions/Collapse';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import {AlarmAdd,Favorite,Share,ExpandMore,MoreVert,Mail,SpeakerNotes,ThumbUp} from 'material-ui-icons';
-import {stateFromMarkdown} from 'draft-js-import-markdown';
+import {stateFromHTML} from 'draft-js-import-html';
+
 import {stateToHTML} from 'draft-js-export-html';
 import htmlReactParser from 'html-react-parser';
 
@@ -19,6 +19,8 @@ import {Badge, Snackbar} from "material-ui";
 import axios from "axios/index";
 import SnaShareForKR from "../CommonComponet/SnaShareForKR";
 import {withRouter} from "react-router-dom";
+import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/css/image-gallery.css";
 
 
 
@@ -83,7 +85,7 @@ class ContentReviewCard extends React.Component {
         if (eventStart && eventEnd){
             retVal =  (
                 <div>
-                    {dateformat(new Date(eventStart),'mm월 dd일')+' 10:00'} ~ {dateformat(new Date(eventEnd),'mm월 dd일')+' 10:00'}
+                    {dateformat(new Date(eventStart),'mm/dd')+' 10:00'}~{dateformat(new Date(eventEnd),'mm/dd')+' 10:00'}
                 </div>);
 
         }
@@ -94,9 +96,8 @@ class ContentReviewCard extends React.Component {
 
     onAlarmAddBtn = () =>{
 
-        // this.setState({ snackbarOpen: true, snackbarMessage:'메세지메세지메세지:onAlarmAddBtn'});
-
         const  {contentAlarmNo,eventContentNo} = this.state;
+
 
 
         // 등록 된 후에 삭제할때
@@ -172,23 +173,22 @@ class ContentReviewCard extends React.Component {
 
     render() {
 
-
-
-
-        const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage,contentThumbupNo,contentAlarmNo,contentCommentCnt} = this.state;
-        const { classes ,content ,initContentDescOpen} = this.props;
-        const { eventDesc
-            ,eventEnd
+        const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage,contentThumbupNo,contentAlarmNo,contentCommentCnt,expandedDesc,expandedShare} = this.state;
+        const { classes  , refBy} = this.props;
+        const { eventContentNo
+            ,eventDesc
+            ,eventDescText
+            ,eventDescThumbnails
             ,eventLocations
             ,eventStart
+            ,eventEnd
             ,refPath
             ,repeatKind
             ,title
-            ,avatarUrl
-            ,mainImageUrl
-            ,mainImageText
-            ,userNm} = this.props.content;
-        const avatarText = avatarUrl ? '' : userNm;
+            ,userPhotos
+            ,userNm
+            } = this.props.content;
+        const avatarText = userPhotos ? '' : userNm;
         let alarmAddIconColor, thumbUpIconColor;
 
 
@@ -199,39 +199,64 @@ class ContentReviewCard extends React.Component {
         else thumbUpIconColor = '';
 
 
+        // 이미지 변환시 최대 사이즈 조정을 위해서 style추가
+        let options = {
+            entityStyleFn: (entity) => {
+                const entityType = entity.get('type').toLowerCase();
+                if (entityType === 'image') {
+                    const data = entity.getData();
+
+                    return {
+                        element: 'img',
+                        attributes: {
+                            src: data.src,
+                        },
+                        style: {
+                            'max-width' : '100%','max-height': '100%',
+                        },
+                    };
+                }
+            },
+        };
+
+        const shortEventDesc=  eventDescText.substr(0,40);
         const eventPeriod = this.getFormatDate(eventStart,eventEnd);
-        const contentState = stateFromMarkdown(eventDesc);
-        const eventDescHtml =  stateToHTML(contentState);
-        const shortEventDesc=  contentState.getPlainText().substr(0,80);
+        const contentState = stateFromHTML(eventDesc);      // markdown으로 생각하고 state 구조를 가져오고
+        let eventDescHtml =  stateToHTML(contentState,options);       // satet를 Html로 변경 (html 변경시 < 테그는  &lt;로 전환됨
+         // let eventDescHtml = eventDesc;
+        // eventDescHtml = unEscapeHTML(eventDescHtml).replace(/\\s\\s/g,'<BR>');
 
-        let mediaHeight = 0;
 
-        if (mainImageUrl.length > 0) mediaHeight = classes.media.height;
+
+        let thumbnailImages = [];
+
+
+        // if (eventDescThumbnails) eventDescThumbnails.map((item) => console.log(item));
+        if (eventDescThumbnails) JSON.parse(eventDescThumbnails).forEach(function(obj) { thumbnailImages.push({original: obj}) });
+
+
         return (
             <div>
                 <Card className={classes.card}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="Recipe" className={classes.avatar} src={avatarUrl}>{avatarText}</Avatar>
+                            <Avatar aria-label="Recipe" className={classes.avatar} src={userPhotos}>{avatarText}</Avatar>
                         }
                         // action={
                         //     <IconButton onClick={this.OnClickIconBtn}>
                         //         <MoreVert />
                         //     </IconButton>
                         // }
-                        title={title + (repeatKind ? '(' + repeatKind + ')' : '')}
+                        title={title}
                         subheader={eventPeriod}
                     />
-                    <CardMedia
-                        className={classes.media} style={{height : mediaHeight}}
-                        image={mainImageUrl}
-                        title={mainImageText}
-                    />
-                    <CardContent>
 
-                            {shortEventDesc}
+                    { refBy != 'ContentMain' && thumbnailImages.length > 0 ? <ImageGallery items={thumbnailImages} lazyLoad={true} showPlayButton={false} showThumbnail={false}  />
+                                                    : '' }
 
-                    </CardContent>
+                    { refBy != 'ContentMain' ? <CardContent>{shortEventDesc} </CardContent>
+                                            : ''
+                    }
 
 
                     <CardActions className={classes.actions} disableActionSpacing>
@@ -252,22 +277,22 @@ class ContentReviewCard extends React.Component {
                         </IconButton>
                         <IconButton
                             className={classnames(classes.expand, {
-                                [classes.expandOpen]: this.state.expandedDesc,
+                                [classes.expandOpen]: expandedDesc,
                             })}
                             onClick={this.handleExpandClick}
-                            aria-expanded={this.state.expandedDesc}
+                            aria-expanded={expandedDesc}
                             aria-label="Show more"
                         >
                             <ExpandMore/>
                         </IconButton>
                     </CardActions>
 
-                    <Collapse in={this.state.expandedShare} timeout="auto" unmountOnExit>
-                        <SnaShareForKR pathname={'https://github.com'}/>
+                    <Collapse in={expandedShare} timeout="auto" unmountOnExit>
+                        <SnaShareForKR pathname={'http://localhost:3000/contentMain?eventContentNo='+ eventContentNo}/>
                     </Collapse>
 
 
-                    <Collapse in={this.state.expandedDesc} timeout="auto" unmountOnExit>
+                    <Collapse in={expandedDesc} timeout="auto" unmountOnExit>
                         <CardContent>
                                 {htmlReactParser(eventDescHtml)}
                         </CardContent>
