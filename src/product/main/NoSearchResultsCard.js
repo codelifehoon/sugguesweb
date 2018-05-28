@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const styles = {
     card: {
-        maxWidth: 345,
+        maxWidth: '100%',
     },
     media: {
         height: 0,

@@ -1,26 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
-import red from 'material-ui/colors/red';
-import {AlarmAdd,Favorite,Share,ExpandMore,MoreVert,Mail,SpeakerNotes,ThumbUp} from 'material-ui-icons';
+import {Card,  CardHeader,CardContent, CardActions,Collapse,Avatar,IconButton,Badge,Snackbar } from '@material-ui/core';
+import {red} from '@material-ui/core/colors';
 import {stateFromHTML} from 'draft-js-import-html';
 
 import {stateToHTML} from 'draft-js-export-html';
 import htmlReactParser from 'html-react-parser';
 
-
 import dateformat from 'dateformat';
-import {Badge, Snackbar} from "material-ui";
 import axios from "axios/index";
 import SnaShareForKR from "../CommonComponet/SnaShareForKR";
 import {withRouter} from "react-router-dom";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import {Edit,AlarmAdd,Favorite,Share,ExpandMore,MoreVert,Mail,SpeakerNotes,ThumbUp} from "@material-ui/icons";
 
 
 
@@ -103,7 +98,7 @@ class ContentReviewCard extends React.Component {
         // 등록 된 후에 삭제할때
         if (contentAlarmNo ) {
 
-            axios.patch('http://localhost:8080/Content/V1/UpdateContentAlarm/'+  contentAlarmNo +'/N'
+            axios.patch('http://localhost:8080/Content/V1/updateContentAlarm/'+  contentAlarmNo +'/N'
                 ,{}
                 , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
             )
@@ -116,7 +111,7 @@ class ContentReviewCard extends React.Component {
             const jsonValue = {
                 "eventContentNo": eventContentNo
             };
-            axios.post('http://localhost:8080/Content/V1/AddContentAlarm'
+            axios.post('http://localhost:8080/Content/V1/addContentAlarm'
                 , jsonValue
                 , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
                         )
@@ -148,7 +143,7 @@ class ContentReviewCard extends React.Component {
                 "eventContentNo": eventContentNo
             };
 
-            axios.post('http://localhost:8080/Content/V1/AddContentThumbUp'
+            axios.post('http://localhost:8080/Content/V1/addContentThumbUp'
                 , jsonValue
                 , {withCredentials: true, headers: {'Content-Type': 'application/json'}}
             )
@@ -171,6 +166,10 @@ class ContentReviewCard extends React.Component {
         this.setState({ snackbarOpen: false });
     };
 
+    onContentEditBtn = () => {
+        this.props.history.push('/RegistryPlan?eventContentNo=' + this.state.eventContentNo)
+    }
+
     render() {
 
         const {snackbarOpen,snackbarVertical,snackbarHorizontal,snackbarMessage,contentThumbupNo,contentAlarmNo,contentCommentCnt,expandedDesc,expandedShare} = this.state;
@@ -187,6 +186,7 @@ class ContentReviewCard extends React.Component {
             ,title
             ,userPhotos
             ,userNm
+            ,isEqualLoginUser
             } = this.props.content;
         const avatarText = userPhotos ? '' : userNm;
         let alarmAddIconColor, thumbUpIconColor;
@@ -234,10 +234,11 @@ class ContentReviewCard extends React.Component {
         // if (eventDescThumbnails) eventDescThumbnails.map((item) => console.log(item));
         if (eventDescThumbnails) JSON.parse(eventDescThumbnails).forEach(function(obj) { thumbnailImages.push({original: obj}) });
 
-
         return (
             <div>
+
                 <Card className={classes.card}>
+
                     <CardHeader
                         avatar={
                             <Avatar aria-label="Recipe" className={classes.avatar} src={userPhotos}>{avatarText}</Avatar>
@@ -249,13 +250,14 @@ class ContentReviewCard extends React.Component {
                         // }
                         title={title}
                         subheader={eventPeriod}
+                        onClick={this.onCommentListBtn}
                     />
 
                     { refBy != 'ContentMain' && thumbnailImages.length > 0 ? <ImageGallery items={thumbnailImages} lazyLoad={true} showPlayButton={false} showThumbnail={false}  />
-                                                    : '' }
+                        : '' }
 
-                    { refBy != 'ContentMain' ? <CardContent>{shortEventDesc} </CardContent>
-                                            : ''
+                    { refBy != 'ContentMain' ? <CardContent style={{'word-break':'break-all'}}>{shortEventDesc} </CardContent>
+                        : ''
                     }
 
 
@@ -275,6 +277,11 @@ class ContentReviewCard extends React.Component {
                         <IconButton  aria-label="Share" onClick={this.onShareBtnBtn}>
                             <Share/>
                         </IconButton>
+                        {
+                            isEqualLoginUser ? <IconButton  aria-label="Contens Edit"onClick={this.onContentEditBtn} ><Edit/></IconButton>
+                                : ''
+                        }
+
                         <IconButton
                             className={classnames(classes.expand, {
                                 [classes.expandOpen]: expandedDesc,
@@ -285,6 +292,7 @@ class ContentReviewCard extends React.Component {
                         >
                             <ExpandMore/>
                         </IconButton>
+
                     </CardActions>
 
                     <Collapse in={expandedShare} timeout="auto" unmountOnExit>
@@ -293,8 +301,9 @@ class ContentReviewCard extends React.Component {
 
 
                     <Collapse in={expandedDesc} timeout="auto" unmountOnExit>
-                        <CardContent>
-                                {htmlReactParser(eventDescHtml)}
+
+                        <CardContent style={{'word-break':'break-all'}}>
+                            {htmlReactParser(eventDescHtml)}
                         </CardContent>
                     </Collapse>
                 </Card>
@@ -311,6 +320,7 @@ class ContentReviewCard extends React.Component {
 
             </div>
         );
+
 
 
 

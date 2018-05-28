@@ -6,7 +6,7 @@ import  BodyContent from '../product/main/BodyContent'
 
 let mapStatusintergratSearch = (state) =>{
     return {
-            content : state.intergratSearchReducer.content,
+                intergratSearchResult : state.intergratSearchReducer.intergratSearchResult,
             };
     };
 

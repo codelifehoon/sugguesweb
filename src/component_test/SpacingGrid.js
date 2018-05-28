@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import { FormLabel, FormControlLabel } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Paper from 'material-ui/Paper';
-import { createMuiTheme } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { FormLabel, FormControlLabel } from '@material-ui/core/Form';
+import Radio, { RadioGroup } from '@material-ui/core/Radio';
+import Paper from '@material-ui/core/Paper';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 
 const styles = theme => ({
@@ -40,7 +40,7 @@ class GuttersGrid extends React.Component {
 
    <Grid container className={classes.root}>
                 <Grid item xs={12}>
-                    <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
+                    <Grid container className={classes.root} justify="center" spacing={Number(spacing)}>
                         {[0, 1, 2].map(value => (
                             <Grid key={value} item>
                                 <Paper className={classes.paper} />

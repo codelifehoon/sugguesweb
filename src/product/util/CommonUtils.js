@@ -79,6 +79,9 @@ export const  doIntergateSearch = (notiIntergrateSearch,period,searchSentence,la
         .catch(err => { console.log('>>>> :' + err); if (callBack) callBack();});
 };
 
+export  const isNextPage= (responseData) => {
+    return responseData && !responseData.last;
+}
 
 
 export const unEscapeHTML = (html) => {

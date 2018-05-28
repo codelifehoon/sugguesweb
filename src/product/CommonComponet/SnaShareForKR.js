@@ -2,7 +2,7 @@ import React from 'react';
 import {FacebookButton, FacebookCount ,KaKaoTalkButton ,TwitterButton } from "react-social";
 import {Button, IconButton} from "material-ui";
 import withStyles from "material-ui/styles/withStyles";
-import DeleteIcon from 'material-ui-icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
     FacebookShareCount,
     GooglePlusShareCount,

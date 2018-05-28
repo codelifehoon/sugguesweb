@@ -3,7 +3,7 @@ import * as types from './ActionTypes';
 
 
 const IntergrateSearchInitialState = {
-    content :'',
+    intergratSearchResult :'',
     pos : 'none'
 };
 
@@ -20,9 +20,9 @@ export  const  intergratSearchReducer = (state=IntergrateSearchInitialState , ac
 
     switch (action.type){
         case types.INTERGRATE_SEARCH :
-            return Object.assign({},state,{content:action.notiData});
+            return Object.assign({},state,{intergratSearchResult:action.notiData});
         default:
-            return Object.assign({},state,{content:{}, pos :''});
+            return Object.assign({},state,{intergratSearchResult:{}, pos :''});
     }
 }
 

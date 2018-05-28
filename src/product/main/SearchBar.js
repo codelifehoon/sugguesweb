@@ -1,6 +1,6 @@
 import React from 'react';
 import IconButton from "material-ui/IconButton/IconButton";
-import SearchIcon from 'material-ui-icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 import SearchInputBox from "./SearchInputBox";
 import withStyles from "material-ui/styles/withStyles";
 import Grid from "material-ui/Grid/Grid";
@@ -43,22 +43,6 @@ class SearchBar extends React.Component{
         const {period,searchSentence}  = this.state;
 
         doIntergateSearch(this.props.notiIntergrateSearch,period,searchSentence,0,0,0);
-
-
-        // let today  = new Date();
-        //
-        // const reqUrl = 'http://localhost:8080/Content/V1/findContentList'
-        //     + '/' + searchSentence
-        //     + '/' + period
-        //     + '/0/0';
-        //
-        // console.debug(reqUrl);
-        //
-        // axios.get(reqUrl
-        //     ,{withCredentials: true, headers: {'Content-Type': 'application/json'}})
-        //     .then(res =>{ this.props.notiIntergrateSearch(res.data) } )
-        //     .catch(err => { console.log('>>>> :' + err); });
-
 
     }
 

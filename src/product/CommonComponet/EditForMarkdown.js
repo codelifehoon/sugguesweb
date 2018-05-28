@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { EditorState , convertFromHTML,ContentState ,convertToRaw,convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import  PropTypes from 'prop-types';
 
@@ -41,10 +43,17 @@ export class EditForMarkdown extends Component {
 
 
             // 수정후
-            let htmlStr = this.props.initRowText;
-            const contentBlocks = convertFromHTML(this.props.initRowText);
-            const editorContent = ContentState.createFromBlockArray(contentBlocks);
-            this.setState({editorState: EditorState.createWithContent(editorContent)});
+            // let htmlStr = this.props.initRowText;
+
+            const blocksFromHtml = htmlToDraft(this.props.initRowText);
+            // const { contentBlocks, entityMap } = blocksFromHtml;
+            const contentState = ContentState.createFromBlockArray(blocksFromHtml.contentBlocks, blocksFromHtml.entityMap);
+            this.setState({editorState: EditorState.createWithContent(contentState)});
+
+
+            // const contentBlocks = convertFromHTML(this.props.initRowText);
+            // const editorContent = ContentState.createFromBlockArray(contentBlocks);
+            // this.setState({editorState: EditorState.createWithContent(editorContent)});
 
         }else{
             // const editorContent = convertFromRaw('#입력해주세요#');
@@ -73,17 +82,14 @@ export class EditForMarkdown extends Component {
         }
 
     }
-
     render() {
 
-
         const { editorState } = this.state;
-
-
+        // maxWidth:'100%'
         return (
             <Editor
                 editorState={editorState}
-                editorStyle={{border: '1px solid Gainsboro',width:340 }}
+                editorStyle={{border: '1px solid Gainsboro',width:340}}
                 // wrapperClassName="demo-wrapper"
                 // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange}

@@ -17,10 +17,10 @@ class ContentMain extends React.Component {
 
     state = { expandAddComment : false
                 ,addCommentValue : ''
-                ,webCertInfo : null
                 ,commentList : []
                 ,content : null
                 ,initContentStatus : false
+                ,webCertInfo : null
                 };
 
 
@@ -49,6 +49,7 @@ class ContentMain extends React.Component {
                 const d = res.data;
                 let contentTemp = Object.assign({},res.data.eventContent,d.user);
 
+                contentTemp.isEqualLoginUser   =d.isEqualLoginUser
                 contentTemp.contentThumbupNo   =d.contentThumbUp.contentThumbupNo;
                 contentTemp.contentAlarmNo     =d.contentAlarm.contentAlarmNo;
                 contentTemp.contentCommentCnt  =d.commentCnt;

@@ -4,9 +4,7 @@ import * as Codes from './Codes'
 
 
 
-export const getFormattedAddressFromLocation = (latLng) =>{
-
-    let latLngObj = JSON.parse(latLng);
+export const getFormattedAddressFromLocation = (latLngObj) =>{
 
     let url =  'https://maps.googleapis.com/maps/api/geocode/json?latlng='
     + latLngObj.lat  +','+ latLngObj.lng

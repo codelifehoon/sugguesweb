@@ -1,19 +1,11 @@
 "use strict";
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
-import MenuIcon from 'material-ui-icons/Menu';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import {Drawer,AppBar,Toolbar,List,Typography,Divider,IconButton} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import {ChevronLeft as ChevronLeftIcon,ChevronRight as ChevronRightIcon ,Home} from '@material-ui/icons'
 import { mailFolderListItems, otherMailFolderListItems } from './product/tileData';
 import TemplateSelector from "./product/TemplateSelector";
 import {Button, Grid} from "material-ui";
@@ -22,7 +14,7 @@ import TemplateManager from "./product/CommonComponet/TemplateManager";
 import DialogForNoti from "./product/CommonComponet/DialogForNoti";
 import queryString from "query-string";
 import {getWebCertInfoCookie} from "./product/util/CommonUtils";
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -61,7 +53,7 @@ const styles = theme => ({
     },
     menuButton: {
         marginLeft: 12,
-        marginRight: 20,
+        marginRight: 0,
     },
     hide: {
         display: 'none',
@@ -80,7 +72,8 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3,
+        paddingTop: theme.spacing.unit * 3,
+        padding: 0,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -211,6 +204,11 @@ class HomeView extends React.Component {
                                     >
                                         <MenuIcon />
                                     </IconButton>
+
+                                    <IconButton color="inherit"  onClick={()=>{ this.props.history.push('/Home');}} >
+                                        <Home/>
+                                    </IconButton>
+
 
                                     <Typography variant="title" color="inherit" noWrap>
                                         {barTitle}

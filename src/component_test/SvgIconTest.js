@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
-import SvgIcon from 'material-ui/SvgIcon';
+import { withStyles } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const styles = {
     root: {

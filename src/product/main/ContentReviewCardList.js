@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import {Paper, Snackbar} from "material-ui";
 import ContentReviewCard from "./ContentReviewCard";
 
 
 const styles = theme => ({
     root: theme.mixins.gutters({
-        paddingTop: 16,
+        paddingTop: 0,
         paddingBottom: 16,
-        marginTop: theme.spacing.unit * 3,
+        // marginTop: theme.spacing.unit * 3,
     }),
 });
 
@@ -27,7 +27,6 @@ class ContentReviewCardList extends React.Component {
                 <ContentReviewCard key={d.eventContentNo} content={d} ></ContentReviewCard>
             )
             })}
-
             </div>
 
         );
