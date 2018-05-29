@@ -4,24 +4,26 @@ import * as actions from './ReducerActions';
 import  SearchBar from '../product/main/SearchBar';
 import  BodyContent from '../product/main/BodyContent'
 
-let mapStatusSearchBar = (state) =>{
+let mapStatusintergratSearch = (state) =>{
     return {
-                searchValue : state.searchBoxChange.searchValue,
+                intergratSearchResult : state.intergratSearchReducer.intergratSearchResult,
             };
     };
 
-let mapDispatchSearchBar = (dispatch) =>{
+let mapDispatchIntergratSearch = (dispatch) =>{
     return {
-        notiSearchTextChange : (searchText) => dispatch(actions.dispatchSearchBarText(searchText)),
+        notiIntergrateSearch : (notiData) => dispatch(actions.intergratSearchAction(notiData)),
     };
 };
 
 
+/*
 let mapStatusToMainBodyContentProps = (state) =>{
     return {
-        searchValue : state.searchBoxChange.searchValue,
+            content : state.intergratSearchReducer.content,
     };
 };
+*/
 
-export  const SearchBarContainer = connect(mapStatusSearchBar,mapDispatchSearchBar)(SearchBar);
-export  const BodyContentContainer = connect(mapStatusToMainBodyContentProps)(BodyContent);
+export  const SearchBarContainer = connect(mapStatusintergratSearch,mapDispatchIntergratSearch)(SearchBar);
+export  const BodyContentContainer = connect(mapStatusintergratSearch,mapDispatchIntergratSearch)(BodyContent);

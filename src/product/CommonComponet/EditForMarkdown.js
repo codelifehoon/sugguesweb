@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { EditorState , convertFromHTML,ContentState ,convertToRaw,convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import draftToMarkdown from 'draftjs-to-markdown';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import  PropTypes from 'prop-types';
 
@@ -36,8 +37,23 @@ export class EditForMarkdown extends Component {
 */
 
         if (this.props.initRowText){
-            // const editorContent =  convertFromRaw(this.props.initRowText);
-            this.setState({editorState: EditorState.createWithContent(ContentState.createFromText(this.props.initRowText))});
+
+            // 수정전
+            // this.setState({editorState: EditorState.createWithContent(ContentState.createFromText(this.props.initRowText))});
+
+
+            // 수정후
+            // let htmlStr = this.props.initRowText;
+
+            const blocksFromHtml = htmlToDraft(this.props.initRowText);
+            // const { contentBlocks, entityMap } = blocksFromHtml;
+            const contentState = ContentState.createFromBlockArray(blocksFromHtml.contentBlocks, blocksFromHtml.entityMap);
+            this.setState({editorState: EditorState.createWithContent(contentState)});
+
+
+            // const contentBlocks = convertFromHTML(this.props.initRowText);
+            // const editorContent = ContentState.createFromBlockArray(contentBlocks);
+            // this.setState({editorState: EditorState.createWithContent(editorContent)});
 
         }else{
             // const editorContent = convertFromRaw('#입력해주세요#');
@@ -53,7 +69,7 @@ export class EditForMarkdown extends Component {
         });
 
         const contentState = this.state.editorState.getCurrentContent();
-        const contentRaw = draftToMarkdown(convertToRaw(contentState));
+        const contentRaw = draftToHtml(convertToRaw(contentState));
         this.props.onEditorStateChange(contentRaw);
     };
 
@@ -66,23 +82,21 @@ export class EditForMarkdown extends Component {
         }
 
     }
-
     render() {
 
-
         const { editorState } = this.state;
-
+        // maxWidth:'100%'
         return (
             <Editor
                 editorState={editorState}
-                editorStyle={{border: '1px solid Gainsboro'}}
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                editorStyle={{border: '1px solid Gainsboro',width:340}}
+                // wrapperClassName="demo-wrapper"
+                // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange}
                 onFocus={this.onFocusEditer}
                 localization={{locale: 'ko',}}
                 toolbar={{
-                    options: ['inline', 'blockType', 'fontSize'],
+                    options: ['inline',   'fontSize'],
                     inline: {
                         options: ['bold', 'italic', 'underline', 'strikethrough'],
                         bold: { className: 'bordered-option-classname' },
@@ -99,13 +113,10 @@ export class EditForMarkdown extends Component {
                     },
                 }}
             >
-
-
             </Editor>
         )
     }
 }
-
 
 
 EditForMarkdown.propTypes = {

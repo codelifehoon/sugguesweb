@@ -54,13 +54,13 @@ class ContentComment extends React.Component {
                 userHash,
                 commentDesc,
                 commentPw,
-                avatarUrl,
+                userPhotos,
                 userNm,
                 createDt,
                 updateDt
             } = this.props.comment;
         const { classes ,comment} = this.props;
-        const avatarText = avatarUrl ? '' : userNm;
+        const avatarText = userPhotos ? '' : userNm;
         const {editCommentValue,expandEditComment} = this.state;
         let menuItems = null;
 
@@ -74,7 +74,7 @@ class ContentComment extends React.Component {
         return (<div>
             <Grid container>
                 <Grid item xs={1} align={'left'}>
-                    <Avatar aria-label="Recipe" className={classNames(classes.avatar, classes.smallAvatar)} src={avatarUrl} >{avatarText}</Avatar>
+                    <Avatar aria-label="Recipe" className={classNames(classes.avatar, classes.smallAvatar)} src={userPhotos} >{avatarText}</Avatar>
                 </Grid>
                 <Grid item xs={9} align={'left'}>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{dateformat(createDt,'yyyy-mm-dd')}

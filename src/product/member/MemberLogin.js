@@ -2,12 +2,13 @@ import React from 'react';
 import Grid from "material-ui/Grid/Grid";
 import Typography from "material-ui/Typography/Typography";
 import withStyles from "material-ui/styles/withStyles";
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 import {FileUpload,AccountCircle,ChevronRight} from "material-ui-icons";
-
-
-
+import {getUrlParam} from "../util/CommonUtils";
+import {withRouter} from "react-router-dom";
+import {FacebookLoginButton, GoogleLoginButton, NaverLoginButton} from "./SocialLoginButton";
+// import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons';
 
 const styles = theme => ({
     button: {
@@ -27,18 +28,25 @@ const styles = theme => ({
 
 class MemberLogin extends React.Component {
 
+
+    componentDidMount(){
+        // const cb = getUrlParam(this.props,'cb');
+        // console.log(cb);
+
+    }
     oAuthOnClick = (authType) => {
+
+        const cb = encodeURIComponent(getUrlParam(this.props,'cb'));
 
         let oAuthUrl = '';
         if (authType === 'google'){
-            oAuthUrl = 'http://localhost:7070/sv/oAuth/google'
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/google?cb='+cb;
         }else if (authType === 'facebook'){
-            oAuthUrl = 'http://localhost:7070/sv/oAuth/facebook'
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/facebook?cb='+cb;
         }
         else {
-            oAuthUrl = 'http://localhost:7070/sv/oAuth/naver'
+            oAuthUrl = 'http://localhost:7070/sv/oAuth/naver?cb='+cb;
         }
-
 
         console.log(oAuthUrl);
         window.location.href = oAuthUrl;
@@ -55,39 +63,43 @@ class MemberLogin extends React.Component {
                     {/* title row*/}
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Typography variant={'display1'} color={'primary'} align={'left'}>Welcome!</Typography>
+                        <br/><br/>
+                        <Typography variant={'display1'} color={'primary'} align={'left'}>로그인 해주세요.</Typography>
+                        <br/>
                         <Typography gutterBottom align={'left'}>
                             {`
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    `}
+                      회원가입은 없습니다.
+                      보유하고 서비스 중 하나로 로그인 해주세요.
+                            `}
                         </Typography>
+                        <br/>
                     </Grid>
                     
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('google')}}>
+                        <GoogleLoginButton text="Google 로그인"  onClick={() => {this.oAuthOnClick('google')}}>
                             google
-                        </Button>
+                        </GoogleLoginButton>
                     </Grid>
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('facebook')}}>
+                        <FacebookLoginButton text="Facebook 로그인" onClick={() => {this.oAuthOnClick('facebook')}}>
                             facebook
-                        </Button>
+                        </FacebookLoginButton>
                     </Grid>
 
                     <Grid item xs={1}/>
                     <Grid item xs={11}>
-                        <Button  variant='raised' className={classes.button} onClick={() => {this.oAuthOnClick('naver')}}>
+                        <NaverLoginButton  text="Naver 로그인" onClick={() => {this.oAuthOnClick('naver')}}>
                             naver
-                        </Button>
+                        </NaverLoginButton>
                     </Grid>
 
                     <Grid item xs={12}>
                     <Typography gutterBottom align={'center'} color={'secondary'} >
-                        로그인 정보는 1년동안 유지 됩니다.
+                        <br/>
+                        최초 로그인시 로그인 정보는 1년 동안 유지 됩니다.
                     </Typography>
 
                     </Grid>
@@ -104,4 +116,4 @@ class MemberLogin extends React.Component {
 
 MemberLogin.propTypes = {};
 
-export default withStyles(styles)(MemberLogin);
+export default withStyles(styles)(withRouter(MemberLogin));

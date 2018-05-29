@@ -1,18 +1,11 @@
 "use strict";
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import {Drawer,AppBar,Toolbar,List,Typography,Divider,IconButton} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import {ChevronLeft as ChevronLeftIcon,ChevronRight as ChevronRightIcon ,Home} from '@material-ui/icons'
 import { mailFolderListItems, otherMailFolderListItems } from './product/tileData';
 import TemplateSelector from "./product/TemplateSelector";
 import {Button, Grid} from "material-ui";
@@ -20,6 +13,8 @@ import LogInOutButton from "./product/CommonComponet/LogInOutButton";
 import TemplateManager from "./product/CommonComponet/TemplateManager";
 import DialogForNoti from "./product/CommonComponet/DialogForNoti";
 import queryString from "query-string";
+import {getWebCertInfoCookie} from "./product/util/CommonUtils";
+import {Link, withRouter} from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -58,7 +53,7 @@ const styles = theme => ({
     },
     menuButton: {
         marginLeft: 12,
-        marginRight: 20,
+        marginRight: 0,
     },
     hide: {
         display: 'none',
@@ -77,7 +72,8 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3,
+        paddingTop: theme.spacing.unit * 3,
+        padding: 0,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -101,6 +97,9 @@ const styles = theme => ({
     'contentShift-right': {
         marginRight: 0,
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
 });
 
 class HomeView extends React.Component {
@@ -109,7 +108,8 @@ class HomeView extends React.Component {
         open: false,
         anchor: 'left',
         barTitle:'',
-        dialogForNoti : null
+        dialogForNoti : null,
+        isLogin : false
     };
 
 
@@ -120,6 +120,11 @@ class HomeView extends React.Component {
 
             this.setState({dialogForNoti :  this.createDialogForNoti('Login Error',queryString.parse(this.props.location.search).message)});
         }
+
+        if (getWebCertInfoCookie() !== ''){
+            this.setState({isLogin : true});
+        }
+
 
     };
 
@@ -136,10 +141,16 @@ class HomeView extends React.Component {
         return (<DialogForNoti  dialogTitle={dialogTitle} dialogMessage={dialogMessage} />);
     }
 
+    createContens = () => {
+
+        window.location.href = '/registryPlan';
+
+
+    }
     render() {
 
         const { classes, theme , templateSelectorKey} = this.props;
-        const { anchor, open} = this.state;
+        const { anchor, open,isLogin} = this.state;
         const barTitle = TemplateManager.getComponentTitle(templateSelectorKey);
 
         const drawer = (
@@ -182,27 +193,38 @@ class HomeView extends React.Component {
                         })}
                     >
                         <Grid container>
-                            <Grid item xs={8}>
-                        <Toolbar disableGutters={!open} >
+                            <Grid item xs={7}>
+                                <Toolbar disableGutters={!open} >
 
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={this.handleDrawerOpen}
-                                    className={classNames(classes.menuButton, open && classes.hide)}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
+                                    <IconButton
+                                        color="inherit"
+                                        aria-label="open drawer"
+                                        onClick={this.handleDrawerOpen}
+                                        className={classNames(classes.menuButton, open && classes.hide)}
+                                    >
+                                        <MenuIcon />
+                                    </IconButton>
 
-                                <Typography variant="title" color="inherit" noWrap>
-                                    {barTitle}
-                                </Typography>
+                                    <IconButton color="inherit"  onClick={()=>{ this.props.history.push('/Home');}} >
+                                        <Home/>
+                                    </IconButton>
 
 
-                        </Toolbar>
+                                    <Typography variant="title" color="inherit" noWrap>
+                                        {barTitle}
+                                    </Typography>
+
+
+                                </Toolbar>
                             </Grid>
-                            <Grid item xs={4} >
-                                <LogInOutButton align="center" ></LogInOutButton>
+                            <Grid item xs={2} >
+                                {
+                                    isLogin ? <Button variant="flat" color="inherit" aria-label="edit" className={classes.button} onClick={()=>{this.props.history.push('/registryPlan');}}>글쓰기</Button>
+                                        : ''
+                                }
+                            </Grid>
+                            <Grid item xs={3} >
+                                <LogInOutButton align="left" ></LogInOutButton>
                             </Grid>
                         </Grid>
                     </AppBar>
@@ -213,14 +235,13 @@ class HomeView extends React.Component {
                             [classes[`contentShift-${anchor}`]]: open,
                         })}
                     >
+                        <br/><br/>
                         <TemplateSelector templateSelectorKey={templateSelectorKey}/>
                     </main>
-
                     {after}
-
                 </div>
 
-               {/*메세지*/}
+                {/*메세지*/}
                 {this.state.dialogForNoti}
             </div>
 
@@ -240,4 +261,4 @@ HomeView.defaultProps = {
 
 };
 
-export default withStyles(styles, { withTheme: true })(HomeView);
+export default withStyles(styles, { withTheme: true })(withRouter(HomeView));

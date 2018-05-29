@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import {KeyboardArrowLeft, KeyboardArrowRight} from 'material-ui-icons';
 import {Grid, Typography,Button} from "material-ui";
 import propTypes from 'prop-types';
@@ -15,7 +15,7 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     borderCss: {
-        border: '1px solid silver',
+        border: '0px solid silver',
     },
 });
 
@@ -42,7 +42,7 @@ class DateClickSelecter extends React.Component {
 
 
     state = {
-        selectedDay : new Date(this.props.selectedDay)
+        selectedDay : '모든날짜'
     }
 
     keyboardArrowLeftClick = (e) =>{
@@ -57,17 +57,33 @@ class DateClickSelecter extends React.Component {
     }
 
     modifyDay = (day) => {
-        let newDate = this.state.selectedDay;
-        newDate.setDate(newDate.getDate() + day);
-        this.setState({selectedDay: newDate});
+
+        let nextDate;
+
+        if (this.state.selectedDay == '모든날짜' && day < 0 ) return;
+        if (this.state.selectedDay == '모든날짜'){
+             nextDate = new Date();
+             day = 0;
+        }else {
+            nextDate = this.state.selectedDay;
+            nextDate.setDate(nextDate.getDate() + day);
+
+        }
+
+
+
+        if (dateformat(nextDate,'yyyy-mm-dd') < dateformat(new Date(),'yyyy-mm-dd')){
+            nextDate = '모든날짜';
+        }
+
+        this.setState({selectedDay: nextDate});
+        this.props.onChange(nextDate);
     }
-
-
-
 
 
     render() {
         const {classes} = this.props;
+        const {selectedDay} = this.state;
 
         return (
             <div>
@@ -80,10 +96,10 @@ class DateClickSelecter extends React.Component {
 
                 <Grid item xs={6} className={classes.borderCss} style={{paddingTop:'15px'}}>
                     <Typography variant={'headline'} className={classes.borderCss} >
-                        {dateformat(this.state.selectedDay,'yyyy-mm-dd')}
+                        { selectedDay != '모든날짜' ? dateformat(selectedDay,'yyyy-mm-dd') : selectedDay }
                     </Typography>
                     <Typography className={classes.borderCss} >
-                        {dateformat(this.state.selectedDay,'dddd')}
+                        {selectedDay != '모든날짜' ? dateformat(selectedDay,'dddd') : '' }
                     </Typography>
                 </Grid>
 
@@ -101,12 +117,14 @@ class DateClickSelecter extends React.Component {
 }
 
 DateClickSelecter.propTypes = {
-    selectedDay : propTypes.object.isRequired,
+
+    onChange : propTypes.func.isRequired,
     classes : propTypes.object.isRequired
 };
 
+
 DateClickSelecter.defaultProps = {
-    selectedDay :  new Date()
+
 };
 
 export default withStyles(styles)(DateClickSelecter );

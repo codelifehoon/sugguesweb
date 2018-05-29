@@ -1,10 +1,11 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import {Button, Icon} from "material-ui";
 import propTypes from 'prop-types';
 import {KeyboardArrowRight} from "material-ui-icons";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {getWebCertInfoCookie} from "../util/CommonUtils";
 
 
 const styles = theme => ({
@@ -21,7 +22,8 @@ class LogInOutButton extends React.Component {
     constructor(props){
         super(props);
 
-        axios.get('http://localhost:3000/sv/Auths/getAuthInfo')
+      /*
+      axios.get('http://localhost:3000/sv/Auths/getAuthInfo')
             .then(res =>{
                 try{
                     this.setState({webCertInfo : res.data});
@@ -32,8 +34,18 @@ class LogInOutButton extends React.Component {
                     console.log(e);
                 }
             }).catch(err => { console.log('>>>> :' + err); });
+*/
+
 
     }
+
+    componentDidMount(){
+
+        if (getWebCertInfoCookie() !== ''){
+            this.setState({loginStr : '로그아웃',webCertInfo : getWebCertInfoCookie()});
+        }
+    }
+
 
     state = {
         webCertInfo : '',
@@ -59,27 +71,35 @@ class LogInOutButton extends React.Component {
              window.location.href = '/sv/Auths/setLogout/'  + redirUrl;
         }
         else{
-             window.location.href = '/memberLogin';
+
+
+            let locaiton = 'http://localhost:3000' + this.props.location.pathname;
+            if (this.props.location.search) locaiton += this.props.location.search;
+
+
+            window.location.href = '/memberLogin?cb='+ encodeURIComponent(locaiton);
         }
 
     }
-
 
     render() {
         const { classes } = this.props;
 
         return (<div>
-            <Button className={classes.button} variant="raised" onClick={this.loginOutClick}>
+
+            <Button variant="flat" color="inherit" aria-label="edit" className={classes.button}   onClick={this.loginOutClick} >
                 {this.state.loginStr}
             </Button>
+
 
         </div>);
     }
 }
+
 
 LogInOutButton.propTypes = {
     classes: propTypes.object.isRequired,
 
 };
 
-export default withStyles(styles)(LogInOutButton);
+export default withStyles(styles)(withRouter(LogInOutButton));

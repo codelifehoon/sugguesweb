@@ -1,12 +1,19 @@
 import React from 'react';
 import Grid from "material-ui/Grid/Grid";
 import withStyles from "material-ui/styles/withStyles";
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import * as dateformat from "dateformat";
-import DateClickSelecter from "../CommonComponet/DateClickSelecter";
 import ContentReviewCardList from "./ContentReviewCardList";
+import ArrowForward from '@material-ui/icons/ArrowForward';
 import 'typeface-roboto';
 import axios from "axios/index";
+import {Button, CircularProgress, Icon, IconButton} from "material-ui";
+import {ExpandMore} from "material-ui-icons";
+import {doIntergateSearch, getUrlParam, getWebCertInfoCookie, isNextPage} from "../util/CommonUtils";
+import green from '@material-ui/core/colors/green';
+import classNames from 'classnames';
+import NoSearchResultsCard from "./NoSearchResultsCard";
+import Cookies from "universal-cookie";
 
 const styles = theme => ({
     alignCenter : {
@@ -25,7 +32,28 @@ const styles = theme => ({
     },
     iconSmall: {
         fontSize: 20,
+    }, button: {
+        margin: theme.spacing.unit,
     },
+    wrapper: {
+        margin: theme.spacing.unit,
+        position: 'relative',
+    },
+    buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
+    buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+
 });
 
 
@@ -35,74 +63,126 @@ class BodyContent extends React.Component {
 
         this.state = {
             searchDate : dateformat(new Date(),'yyyy-mm-dd'),
-            contentList: null
-    };
+            contentList: null,
+            moreLoading : false,
+            moreLoadingSuccess: false,
+            webCertInfo : null,
+        };
     }
+
 
     componentDidMount(){
-
-        axios.get('http://localhost:8080/Content/V1/findContentList/1/Sat%20Mar%2031%202018%2016%3A57%3A36%20GMT%2B0900%20(KST)/2/3'
-            ,{withCredentials: true, headers: {'Content-Type': 'application/json'}})
-            .then(res =>{
-                const data = res.data;
-                let jsonList = [];
+        this.setState({webCertInfo : getWebCertInfoCookie()});
+    }
 
 
-                for (let key in data.content){
-                    if(data.content.hasOwnProperty(key)) {
+    createContentList= (responseData) => {
 
-                        let d = data.content[key];
-                        let contentTemp = Object.assign({},d.eventContent,d.user);
-
-                        contentTemp.contentThumbupNo   =d.contentThumbUp.contentThumbupNo;
-                        contentTemp.contentAlarmNo     =d.contentAlarm.contentAlarmNo;
-                        contentTemp.contentCommentCnt  =d.commentCnt;
-                        contentTemp.mainImageUrl       ='https://tercertestamentonet.files.wordpress.com/2015/03/audios.jpg';
-                        contentTemp.mainImageText      = 'bird';
-                        jsonList.push(contentTemp);
+        const data = responseData;
+        let jsonList = [];
 
 
-                    }
-                }
+        for (let key in data.content){
+            if(data.content.hasOwnProperty(key)) {
 
-                this.setState({contentList:jsonList});
-            })
-            .catch(err => { console.log('>>>> :' + err); });
+                let d = data.content[key];
+                let contentTemp = Object.assign({},d.eventContent,d.user);
+                contentTemp.isEqualLoginUser   =d.isEqualLoginUser
+                contentTemp.contentThumbupNo   =d.contentThumbUp.contentThumbupNo;
+                contentTemp.contentAlarmNo     =d.contentAlarm.contentAlarmNo;
+                contentTemp.contentCommentCnt  =d.commentCnt;
+                jsonList.push(contentTemp);
+
+            }
+        }
+        return jsonList;
+    }
+
+    moreContnetComplite = () => {
 
     }
+
+
+    moreContentBtn = () =>{
+
+        const  {notiIntergrateSearch,intergratSearchResult} = this.props;
+
+        if (intergratSearchResult.responseData)
+        {
+            this.setState({moreLoading:true,moreLoadingSuccess:false});
+
+            doIntergateSearch(notiIntergrateSearch
+                ,intergratSearchResult.period
+                ,intergratSearchResult.searchSentence
+                ,intergratSearchResult.latitude
+                ,intergratSearchResult.longitude
+                ,intergratSearchResult.responseData.number + 1
+                ,intergratSearchResult.responseData.content
+                ,()=>{this.setState({moreLoading:false,moreLoadingSuccess:false});});
+
+        };
+    }
+
 
 
     render() {
 
-        const  {classes} = this.props;
-        const  {contentList} = this.state;
+        const  {classes,intergratSearchResult} = this.props;
+        const  {moreLoading,moreLoadingSuccess} = this.state;
+        let contentList= null;
+        let moreBtnFlag = false;
+        const buttonClassname = classNames({
+            [classes.buttonSuccess]: moreLoadingSuccess,
+        });
 
-    return (
+        if (intergratSearchResult.responseData) contentList = this.createContentList(intergratSearchResult.responseData);
+        if (isNextPage(intergratSearchResult.responseData) ) moreBtnFlag = true;
+        if (contentList && contentList.length == 0 ) contentList = null;
 
-        <Grid container>
-            {/* title row*/}
+        return (
 
-            <Grid item xs={12} > <DateClickSelecter dateString={this.state.searchDate}/></Grid>
+            <Grid container>
+                {/*2 row*/}
+                <Grid item xs={12}>
+                    {contentList
+                        ? <ContentReviewCardList contentList={contentList}/>
+                        : <NoSearchResultsCard/>}
+                </Grid>
 
-            {/*2 row*/}
-            <Grid item xs={12}>
-                {contentList ? <ContentReviewCardList contentList={contentList}></ContentReviewCardList> : ''}
+                {
+                    moreBtnFlag
+                        ?<Grid item xs={12}>
+                        <div className={classes.wrapper}>
+                            <IconButton
+                                variant="raised"
+                                color="primary"
+                                className={buttonClassname}
+                                disabled={moreLoading}
+                                onClick={this.moreContentBtn}
+                            >
+                                more     <ExpandMore />
+                            </IconButton>
+                            {moreLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                        </div>
+                        </Grid>
+                        : ''
+                }
+
             </Grid>
-        </Grid>
 
 
 
-            );
+        );
 
-}
+    }
 }
 
 BodyContent.propTypes = {
-    searchValue: PropType.string.isRequired
+    intergratSearchResult: PropTypes.object.isRequired,
 };
 
 BodyContent.defaultProps = {
-    searchValue: '',
+    intergratSearchResult: null,
 };
 
 export default withStyles(styles)(BodyContent);

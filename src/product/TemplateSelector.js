@@ -5,8 +5,6 @@ import TemplateManager from "./CommonComponet/TemplateManager";
 
 
 class TemplateSelector extends React.Component {
-
-
     render() {
 
 
@@ -23,7 +21,6 @@ class TemplateSelector extends React.Component {
       else {
           return TemplateManager.getComponentObj(templateSelectorKey);
       }
-
     }
 }
 
