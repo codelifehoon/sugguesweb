@@ -5,7 +5,9 @@
       <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
       <mapping pattern="classobj.java" type="PLAIN_TEXT" />
       <mapping ext="backup" type="PLAIN_TEXT" />
+      <mapping ext="conf" type="PLAIN_TEXT" />
       <mapping ext="tpl" type="PLAIN_TEXT" />
+      <mapping ext="prop" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
