@@ -3,6 +3,8 @@
     <driver id="exasol">
       <artifact name="Exasol" use="true" />
       <option name="auto-sync" value="true" />
+      <option name="auto-commit" value="true" />
+      <option name="send-app-info" value="true" />
     </driver>
     <driver id="h2.unified">
       <artifact name="H2" use="true" />
