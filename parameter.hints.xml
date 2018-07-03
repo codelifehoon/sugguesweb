@@ -1,5 +1,9 @@
 <application>
   <component name="ParameterNameHintsSettings">
-    <blacklists />
+    <blacklists>
+      <blacklist language="Java">
+        <added pattern="somun.appengine.service.ContentSearchService.searchTotalSearchIndex(searchKeyword,pageRequest)" />
+      </blacklist>
+    </blacklists>
   </component>
 </application>
