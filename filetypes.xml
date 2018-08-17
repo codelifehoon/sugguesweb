@@ -10,6 +10,7 @@
       <mapping ext="lock" type="PLAIN_TEXT" />
       <mapping ext="tpl" type="PLAIN_TEXT" />
       <mapping ext="prop" type="PLAIN_TEXT" />
+      <mapping ext="gz" type="PLAIN_TEXT" />
       <mapping pattern="lab-04-mysql_predictive_amt" type="Python" />
     </extensionMap>
   </component>
