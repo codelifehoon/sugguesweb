@@ -14,6 +14,7 @@
       <mapping ext="tpl" type="PLAIN_TEXT" />
       <mapping ext="prop" type="PLAIN_TEXT" />
       <mapping ext="pkl" type="PLAIN_TEXT" />
+      <mapping ext="dump" type="PLAIN_TEXT" />
       <mapping ext="txt2" type="PLAIN_TEXT" />
       <mapping ext="artifact" type="PLAIN_TEXT" />
       <mapping ext="old" type="PLAIN_TEXT" />
