@@ -19,6 +19,7 @@
       <mapping ext="artifact" type="PLAIN_TEXT" />
       <mapping ext="old" type="PLAIN_TEXT" />
       <mapping ext="gz" type="PLAIN_TEXT" />
+      <mapping ext="npy" type="PLAIN_TEXT" />
       <mapping ext="model" type="PLAIN_TEXT" />
       <mapping pattern="lab-04-mysql_predictive_amt" type="Python" />
     </extensionMap>
