@@ -3,9 +3,9 @@
     <option name="sonarQubeServers">
       <list>
         <SonarQubeServer>
-          <option name="hostUrl" value="http://dev-sq.11stcorp.com:8080" />
+          <option name="hostUrl" value="http://dev-sq.11stcorp.com:8080/" />
           <token>df92dfcfdf9adfc9dfcbdfcbdf92dfcbdf99dfc8dfc9df9bdf93df92dfcedf9fdfccdf9adfcfdf98df9adf9fdf9cdfcbdfccdfcfdfcfdf9edfcedf9bdfc9dfc9df9edf92dfcbdfc8dfcbdf92dfcedfce</token>
-          <option name="name" value="11st-config" />
+          <option name="name" value="11stconfig" />
           <organizationKey>default-organization</organizationKey>
         </SonarQubeServer>
       </list>
