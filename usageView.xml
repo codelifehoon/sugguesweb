@@ -6,6 +6,9 @@
     <option name="GROUP_BY_FILE_STRUCTURE" value="false" />
   </component>
   <component name="UsageViewSettings">
+    <option name="expanded" value="true" />
+    <option name="IS_EXPANDED" value="true" />
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
+    <option name="FLATTEN_MODULES" value="false" />
   </component>
 </application>
