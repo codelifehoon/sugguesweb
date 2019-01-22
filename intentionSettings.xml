@@ -3,5 +3,7 @@
     <ignoreAction name="Java/Declaration/Create Test" />
     <ignoreAction name="Java/I18N/Convert to Basic Latin" />
     <ignoreAction name="Java/Declaration/Generate overloaded method with default parameter values" />
+    <ignoreAction name="Language Injection/Edit Injected Fragment" />
+    <ignoreAction name="Language Injection/Edit Injection Settings" />
   </component>
 </application>
