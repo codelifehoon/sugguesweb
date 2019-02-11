@@ -35,11 +35,11 @@
       <mask>*.</mask>
       <mask>*.jsp</mask>
       <mask>*.js</mask>
-      <mask>*.xml</mask>
       <mask>*.xml,*.java</mask>
       <mask>*</mask>
       <mask>*.java</mask>
       <mask>*.*</mask>
+      <mask>*.xml</mask>
     </recentFileMasks>
   </component>
 </application>
