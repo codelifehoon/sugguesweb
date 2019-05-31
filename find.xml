@@ -34,8 +34,8 @@
       <mask>*.*</mask>
       <mask>*</mask>
       <mask>*.xml</mask>
-      <mask>*.java</mask>
       <mask>*.sql</mask>
+      <mask>*.java</mask>
     </recentFileMasks>
   </component>
 </application>
