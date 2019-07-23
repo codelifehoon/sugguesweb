@@ -4,7 +4,6 @@
     <option name="defaultScopeName" value="All Places" />
     <option name="SEARCH_SCOPE" value="All Places" />
     <recentFileMasks>
-      <mask>*.jva</mask>
       <mask>*.jv</mask>
       <mask>*.y</mask>
       <mask>*.ym</mask>
@@ -33,6 +32,7 @@
       <mask>*</mask>
       <mask>*.java</mask>
       <mask>*.sql</mask>
+      <mask>getAcquierInfo</mask>
       <mask>*.xml</mask>
     </recentFileMasks>
   </component>
