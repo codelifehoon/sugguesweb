@@ -2,8 +2,6 @@
   <component name="FindSettings">
     <option name="customScope" value="All Places" />
     <option name="defaultScopeName" value="All Places" />
-    <option name="regularExpressions" value="true" />
-    <option name="REGULAR_EXPRESSIONS" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
     <recentFileMasks>
       <mask>*.jv</mask>
@@ -28,7 +26,6 @@
       <mask>*.jav</mask>
       <mask>*.</mask>
       <mask>*.jsp</mask>
-      <mask>*.js</mask>
       <mask>*.xml,*.java</mask>
       <mask>*.*</mask>
       <mask>*</mask>
@@ -36,6 +33,7 @@
       <mask>getAcquierInfo</mask>
       <mask>*.java</mask>
       <mask>*.xml</mask>
+      <mask>*.js</mask>
     </recentFileMasks>
   </component>
 </application>
