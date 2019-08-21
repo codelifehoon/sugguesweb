@@ -6,9 +6,13 @@
           <option name="url" value="https://github.com/codelifehoon/material-ui.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="ssh://git@bitbucket.11stcorp.com:7999/stsvcon/skpay_serverconfig.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="$USER_HOME$/Developer/reactNative/material-ui" />
+    <option name="cloneParentDir" value="$USER_HOME$/Developer/skpay/skpay_serverconfig" />
   </component>
   <component name="Vcs.Log.App.Settings">
     <option name="MIGRATED" value="true" />
