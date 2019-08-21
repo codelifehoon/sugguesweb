@@ -10,6 +10,10 @@
           <option name="url" value="ssh://git@bitbucket.11stcorp.com:7999/stsvcon/skpay_serverconfig.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="http://1100784@bitbucket.11stcorp.com/scm/stsvcon/skpay_serverconfig.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="$USER_HOME$/Developer/skpay/skpay_serverconfig" />
