@@ -5,6 +5,7 @@
     <option name="localCaseSensitive" value="true" />
     <option name="LOCAL_CASE_SENSITIVE_SEARCH" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
+    <option name="FILE_MASK" value="*.java" />
     <recentFileMasks>
       <mask>*.y</mask>
       <mask>*.ym</mask>
@@ -34,8 +35,8 @@
       <mask>getAcquierInfo</mask>
       <mask>*.js</mask>
       <mask>*.vue</mask>
-      <mask>*.java</mask>
       <mask>*.xml</mask>
+      <mask>*.java</mask>
     </recentFileMasks>
   </component>
 </application>
