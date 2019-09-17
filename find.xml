@@ -5,6 +5,7 @@
     <option name="localCaseSensitive" value="true" />
     <option name="LOCAL_CASE_SENSITIVE_SEARCH" value="true" />
     <option name="SEARCH_SCOPE" value="All Places" />
+    <option name="FILE_MASK" value="*.jsp" />
     <recentFileMasks>
       <mask>*.y</mask>
       <mask>*.ym</mask>
@@ -26,7 +27,6 @@
       <mask>*.ja</mask>
       <mask>*.jav</mask>
       <mask>*.</mask>
-      <mask>*.jsp</mask>
       <mask>*.xml,*.java</mask>
       <mask>*.*</mask>
       <mask>*</mask>
@@ -36,6 +36,7 @@
       <mask>*.vue</mask>
       <mask>*.xml</mask>
       <mask>*.java</mask>
+      <mask>*.jsp</mask>
     </recentFileMasks>
   </component>
 </application>
