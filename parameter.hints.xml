@@ -3,6 +3,7 @@
     <blacklists>
       <blacklist language="Java">
         <added pattern="somun.appengine.service.ContentSearchService.searchTotalSearchIndex(searchKeyword,pageRequest)" />
+        <added pattern="java.util.concurrent.ForkJoinPool.ForkJoinPool(parallelism)" />
       </blacklist>
     </blacklists>
   </component>
