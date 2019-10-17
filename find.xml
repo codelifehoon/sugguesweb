@@ -3,6 +3,7 @@
     <option name="customScope" value="All Places" />
     <option name="defaultScopeName" value="All Places" />
     <option name="SEARCH_SCOPE" value="All Places" />
+    <option name="FILE_MASK" value="*.js" />
     <recentFileMasks>
       <mask>*.y</mask>
       <mask>*.ym</mask>
@@ -29,11 +30,11 @@
       <mask>*</mask>
       <mask>*.sql</mask>
       <mask>getAcquierInfo</mask>
-      <mask>*.js</mask>
       <mask>*.vue</mask>
       <mask>*.java</mask>
       <mask>*.jsp</mask>
       <mask>*.xml</mask>
+      <mask>*.js</mask>
     </recentFileMasks>
   </component>
 </application>
