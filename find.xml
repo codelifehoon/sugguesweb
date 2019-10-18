@@ -32,8 +32,8 @@
       <mask>*.vue</mask>
       <mask>*.java</mask>
       <mask>*.jsp</mask>
-      <mask>*.xml</mask>
       <mask>*.js</mask>
+      <mask>*.xml</mask>
     </recentFileMasks>
   </component>
 </application>
