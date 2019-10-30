@@ -4,5 +4,9 @@
       <display-name>select</display-name>
       <place><![CDATA[xmlTag().withLocalName(string().equalTo("select")).withNamespace(string().equalTo("http://ibatis.apache.org/dtd/sql-map-2.dtd"))]]></place>
     </injection>
+    <injection language="Oracle" injector-id="xml">
+      <display-name>select</display-name>
+      <place><![CDATA[xmlTag().withLocalName(string().equalTo("select")).withNamespace(string().equalTo("http://mybatis.org/dtd/mybatis-3-mapper.dtd"))]]></place>
+    </injection>
   </component>
 </application>
