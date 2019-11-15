@@ -31,9 +31,9 @@
       <mask>getAcquierInfo</mask>
       <mask>*.vue</mask>
       <mask>*.jsp</mask>
-      <mask>*.js</mask>
       <mask>*.java</mask>
       <mask>*.xml</mask>
+      <mask>*.js</mask>
     </recentFileMasks>
   </component>
 </application>
