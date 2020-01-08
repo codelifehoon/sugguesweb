@@ -4,6 +4,7 @@
       <blacklist language="Java">
         <added pattern="somun.appengine.service.ContentSearchService.searchTotalSearchIndex(searchKeyword,pageRequest)" />
         <added pattern="java.util.concurrent.ForkJoinPool.ForkJoinPool(parallelism)" />
+        <added pattern="com.pg.notification.monitoring.application.PasMonServiceImpl.getPayBackCalcValidate(bgndt)" />
       </blacklist>
     </blacklists>
   </component>
