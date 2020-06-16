@@ -8,7 +8,7 @@
     <entry key="analyze.exceptions.on.the.fly" value="true" />
     <entry key="compiler.automake.allow.when.app.running" value="true" />
     <entry key="ide.editor.tabs.open.at.the.end" value="true" />
-    <entry key="java.experimental.support" value="true" />
     <entry key="debugger.watches.in.variables" value="false" />
+    <entry key="bigger.font.in.project.view" value="true" />
   </component>
 </application>
