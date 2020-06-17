@@ -4,8 +4,8 @@
       <mapping pattern="SearchBar" type="JavaScript" />
       <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
       <mapping pattern="checkpoint" type="PLAIN_TEXT" />
-      <mapping pattern="classobj.java" type="PLAIN_TEXT" />
       <mapping pattern="segments_3" type="PLAIN_TEXT" />
+      <mapping pattern="classobj.java" type="PLAIN_TEXT" />
       <mapping pattern="aaa" type="PLAIN_TEXT" />
       <mapping ext="artifact" type="PLAIN_TEXT" />
       <mapping ext="local" type="PLAIN_TEXT" />
