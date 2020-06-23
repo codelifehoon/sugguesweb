@@ -6,5 +6,6 @@
     <ignoreAction name="Language Injection/Edit Injected Fragment" />
     <ignoreAction name="Language Injection/Edit Injection Settings" />
     <ignoreAction name="SQL/Quote identifier" />
+    <ignoreAction name="Language injection/Inject language or reference" />
   </component>
 </application>
