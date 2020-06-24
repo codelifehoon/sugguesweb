@@ -2,6 +2,7 @@
   <component name="MaterialThemeConfig">
     <option name="accentColor" value="416a9b" />
     <option name="highlightColor" value="80cbc4" />
+    <option name="selectedTheme" value="NATIVE" />
     <option name="userId" value="-9af7e0e:172e07412fe:-7ff6" />
     <option name="version" value="5.2.0" />
   </component>
