@@ -1,0 +1,7 @@
+<application>
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="dev-atf-database-1.cluster-crrt8l3himhr.ap-northeast-2.rds.amazonaws.com" id="a4b5277f-144d-428f-a4be-4a3a4e6e25b6" keyPath="$USER_HOME$/Downloads/1100784.pem" port="22" nameFormat="DESCRIPTIVE" username="ec2-user" />
+    </configs>
+  </component>
+</application>
