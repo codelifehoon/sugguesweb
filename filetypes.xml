@@ -2,6 +2,7 @@
   <component name="FileTypeManager" version="17">
     <extensionMap>
       <mapping pattern="SearchBar" type="JavaScript" />
+      <mapping ext="main.kts" type="Kotlin" />
       <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
       <mapping pattern="checkpoint" type="PLAIN_TEXT" />
       <mapping pattern="classobj.java" type="PLAIN_TEXT" />
