@@ -26,9 +26,17 @@
           <option name="url" value="http://github.com" />
           <option name="userName" value="codelife@naver.com" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="ssh://git@bitbucket.11stcorp.com:7999/acme/acme-adapter-order.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="http://bitbucket.11stcorp.com/scm/acme/acme-adapter-order.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="$USER_HOME$/Developer/skpay/skpay-outbound-proxy" />
+    <option name="cloneParentDir" value="$USER_HOME$/Developer/acme" />
   </component>
   <component name="VcsApplicationSettings">
     <option name="SHOW_LST_WORD_DIFFERENCES" value="false" />
