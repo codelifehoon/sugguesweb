@@ -7,5 +7,6 @@
         <added pattern="com.pg.notification.monitoring.application.PasMonServiceImpl.getPayBackCalcValidate(bgndt)" />
       </blacklist>
     </blacklists>
+    <option id="sql.show.column.names.in.select" value="true" />
   </component>
 </application>
