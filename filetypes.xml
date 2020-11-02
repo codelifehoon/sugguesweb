@@ -3,26 +3,26 @@
     <extensionMap>
       <mapping pattern="SearchBar" type="JavaScript" />
       <mapping ext="main.kts" type="Kotlin" />
-      <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
-      <mapping pattern="checkpoint" type="PLAIN_TEXT" />
       <mapping pattern="classobj.java" type="PLAIN_TEXT" />
+      <mapping pattern="checkpoint" type="PLAIN_TEXT" />
       <mapping pattern="segments_3" type="PLAIN_TEXT" />
       <mapping pattern="aaa" type="PLAIN_TEXT" />
-      <mapping ext="artifact" type="PLAIN_TEXT" />
-      <mapping ext="local" type="PLAIN_TEXT" />
-      <mapping ext="backup" type="PLAIN_TEXT" />
-      <mapping ext="lock" type="PLAIN_TEXT" />
-      <mapping ext="dat" type="PLAIN_TEXT" />
+      <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
       <mapping ext="meta" type="PLAIN_TEXT" />
-      <mapping ext="prop" type="PLAIN_TEXT" />
-      <mapping ext="pkl" type="PLAIN_TEXT" />
-      <mapping ext="rxr" type="PLAIN_TEXT" />
-      <mapping ext="dump" type="PLAIN_TEXT" />
-      <mapping ext="txt2" type="PLAIN_TEXT" />
+      <mapping ext="artifact" type="PLAIN_TEXT" />
       <mapping ext="old" type="PLAIN_TEXT" />
-      <mapping ext="gz" type="PLAIN_TEXT" />
+      <mapping ext="rxr" type="PLAIN_TEXT" />
       <mapping ext="npy" type="PLAIN_TEXT" />
+      <mapping ext="pkl" type="PLAIN_TEXT" />
+      <mapping ext="txt2" type="PLAIN_TEXT" />
+      <mapping ext="lock" type="PLAIN_TEXT" />
+      <mapping ext="gz" type="PLAIN_TEXT" />
       <mapping ext="model" type="PLAIN_TEXT" />
+      <mapping ext="local" type="PLAIN_TEXT" />
+      <mapping ext="dump" type="PLAIN_TEXT" />
+      <mapping ext="dat" type="PLAIN_TEXT" />
+      <mapping ext="backup" type="PLAIN_TEXT" />
+      <mapping ext="prop" type="PLAIN_TEXT" />
       <mapping pattern="lab-04-mysql_predictive_amt" type="Python" />
     </extensionMap>
   </component>
