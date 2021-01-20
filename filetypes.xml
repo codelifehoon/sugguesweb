@@ -12,6 +12,7 @@
       <mapping ext="artifact" type="PLAIN_TEXT" />
       <mapping ext="old" type="PLAIN_TEXT" />
       <mapping ext="rxr" type="PLAIN_TEXT" />
+      <mapping ext="yml " type="PLAIN_TEXT" />
       <mapping ext="npy" type="PLAIN_TEXT" />
       <mapping ext="pkl" type="PLAIN_TEXT" />
       <mapping ext="txt2" type="PLAIN_TEXT" />
