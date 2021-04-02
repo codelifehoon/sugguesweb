@@ -1,10 +1,14 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping pattern="hosts_dev" type="App Engine Dockerfile Template" />
       <mapping pattern="SearchBar" type="JavaScript" />
       <mapping ext="main.kts" type="Kotlin" />
       <mapping pattern="classobj.java" type="PLAIN_TEXT" />
       <mapping pattern="checkpoint" type="PLAIN_TEXT" />
+      <mapping pattern="hosts_org" type="PLAIN_TEXT" />
+      <mapping pattern="hosts_prod" type="PLAIN_TEXT" />
+      <mapping pattern="hosts_alp" type="PLAIN_TEXT" />
       <mapping pattern="segments_3" type="PLAIN_TEXT" />
       <mapping pattern="aaa" type="PLAIN_TEXT" />
       <mapping pattern="LayoutSample.js" type="PLAIN_TEXT" />
