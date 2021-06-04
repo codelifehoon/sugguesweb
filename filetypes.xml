@@ -8,6 +8,8 @@
       <mapping pattern="checkpoint" type="PLAIN_TEXT" />
       <mapping pattern="hosts_org" type="PLAIN_TEXT" />
       <mapping pattern="hosts_prod" type="PLAIN_TEXT" />
+      <mapping pattern="json" type="PLAIN_TEXT" />
+      <mapping pattern="empty" type="PLAIN_TEXT" />
       <mapping pattern="segments_3" type="PLAIN_TEXT" />
       <mapping pattern="hosts_alp" type="PLAIN_TEXT" />
       <mapping pattern="aaa" type="PLAIN_TEXT" />
